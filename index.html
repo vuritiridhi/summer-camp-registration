@@ -1,168 +1,35 @@
-<!DOCTYPE html>\
-<html>\
-<head>\
-    <title>Summer Camp 2024 Registration</title>\
-    <script>\
-        async function submitForm() \{\
-            const formData = new FormData(document.querySelector('form'));\
-\
-            // Get all form values\
-            const data = \{\
-                name: formData.get('name'),\
-                dob: formData.get('dob'),\
-                grade: formData.get('grade'),\
-                parent1Name: formData.get('parent1Name'),\
-                parent1Phone: formData.get('parent1Phone'),\
-                parent1Email: formData.get('parent1Email'),\
-                parent2Name: formData.get('parent2Name'),\
-                parent2Phone: formData.get('parent2Phone'),\
-                parent2Email: formData.get('parent2Email'),\
-                emergencyContactName: formData.get('emergencyContactName'),\
-                emergencyContactPhone: formData.get('emergencyContactPhone'),\
-                address: formData.get('address'),\
-                notes: formData.get('notes'),\
-                selectedWeeks: formData.getAll('weeks').join(', '),\
-                selectedDays: formData.getAll('days').join(', '),\
-                programType: formData.get('programType'),\
-                halfDayPreference: formData.get('halfDayPreference'),\
-                tshirt: formData.get('tshirt')\
-            \};\
-\
-            // Perform calculations for total cost\
-            data.totalCost = calculateTotalCost(data);\
-\
-            // Send data to Google Sheets via Apps Script Web App\
-            const response = await fetch('YOUR_WEB_APP_URL', \{\
-                method: 'POST',\
-                body: JSON.stringify(data),\
-                headers: \{\
-                    'Content-Type': 'application/json'\
-                \}\
-            \});\
-\
-            const result = await response.json();\
-            alert(result.message);\
-        \}\
-\
-        function calculateTotalCost(data) \{\
-            // Implement your cost calculation logic here\
-            // Example:\
-            let cost = 0;\
-            const weeks = data.selectedWeeks.split(', ');\
-            const days = data.selectedDays.split(', ');\
-\
-            // Calculate base cost\
-            weeks.forEach(week => \{\
-                switch (data.programType) \{\
-                    case '5 Day Full':\
-                        cost += 399;\
-                        break;\
-                    case '5 Day \'bd AM/PM':\
-                        cost += 329;\
-                        break;\
-                    // Add other cases for different program types\
-                \}\
-            \});\
-\
-            // Add supplies and materials fee\
-            const suppliesFee = Math.min(weeks.length * 10, 60);\
-            cost += suppliesFee;\
-\
-            // Add T-shirt fee if attending any Friday\
-            if (days.includes('Friday')) \{\
-                cost += 10;\
-            \}\
-\
-            // Add any additional charges\
-\
-            return cost;\
-        \}\
-    </script>\
-</head>\
-<body>\
-    <h1>Summer Camp 2024 Registration</h1>\
-    <form onsubmit="event.preventDefault(); submitForm();">\
-        <label for="name">Child's Name:</label>\
-        <input type="text" id="name" name="name" required><br><br>\
-\
-        <label for="dob">Date of Birth/Age:</label>\
-        <input type="date" id="dob" name="dob" required><br><br>\
-\
-        <label for="grade">Grade:</label>\
-        <input type="text" id="grade" name="grade" required><br><br>\
-\
-        <label for="parent1Name">Parent 1 Name:</label>\
-        <input type="text" id="parent1Name" name="parent1Name" required><br><br>\
-\
-        <label for="parent1Phone">Parent 1 Phone:</label>\
-        <input type="tel" id="parent1Phone" name="parent1Phone" required><br><br>\
-\
-        <label for="parent1Email">Parent 1 Email:</label>\
-        <input type="email" id="parent1Email" name="parent1Email" required><br><br>\
-\
-        <label for="parent2Name">Parent 2 Name:</label>\
-        <input type="text" id="parent2Name" name="parent2Name"><br><br>\
-\
-        <label for="parent2Phone">Parent 2 Phone:</label>\
-        <input type="tel" id="parent2Phone" name="parent2Phone"><br><br>\
-\
-        <label for="parent2Email">Parent 2 Email:</label>\
-        <input type="email" id="parent2Email" name="parent2Email"><br><br>\
-\
-        <label for="emergencyContactName">Emergency Contact Name:</label>\
-        <input type="text" id="emergencyContactName" name="emergencyContactName" required><br><br>\
-\
-        <label for="emergencyContactPhone">Emergency Contact Phone:</label>\
-        <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required><br><br>\
-\
-        <label for="address">Street Address:</label>\
-        <input type="text" id="address" name="address" required><br><br>\
-\
-        <label for="notes">Allergies/Special Notes/Dietary Restrictions:</label>\
-        <input type="text" id="notes" name="notes"><br><br>\
-\
-        <label for="weeks">Select the weeks you want to sign up for:</label><br>\
-        <input type="checkbox" name="weeks" value="Week of June 3rd"> Week of June 3rd<br>\
-        <input type="checkbox" name="weeks" value="Week of June 10th"> Week of June 10th<br>\
-        <input type="checkbox" name="weeks" value="Week of June 17th"> Week of June 17th<br>\
-        <input type="checkbox" name="weeks" value="Week of June 24th"> Week of June 24th<br>\
-        <input type="checkbox" name="weeks" value="Week of July 1st"> Week of July 1st<br>\
-        <input type="checkbox" name="weeks" value="Week of July 8th"> Week of July 8th<br>\
-        <input type="checkbox" name="weeks" value="Week of July 15th"> Week of July 15th<br>\
-        <input type="checkbox" name="weeks" value="Week of July 22nd"> Week of July 22nd<br>\
-        <input type="checkbox" name="weeks" value="Week of July 29th"> Week of July 29th<br>\
-        <input type="checkbox" name="weeks" value="Week of August 5th"> Week of August 5th<br><br>\
-\
-        <label for="days">Select the specific days for each week:</label><br>\
-        <input type="checkbox" name="days" value="Monday"> Monday<br>\
-        <input type="checkbox" name="days" value="Tuesday"> Tuesday<br>\
-        <input type="checkbox" name="days" value="Wednesday"> Wednesday<br>\
-        <input type="checkbox" name="days" value="Thursday"> Thursday<br>\
-        <input type="checkbox" name="days" value="Friday"> Friday<br><br>\
-\
-        <label for="programType">Program Type:</label><br>\
-        <input type="radio" name="programType" value="5 Day Full" required> 5 Day Full ($399)<br>\
-        <input type="radio" name="programType" value="5 Day \'bd AM/PM" required> 5 Day \'bd AM/PM ($329)<br>\
-        <input type="radio" name="programType" value="4 Day Full" required> 4 Day Full ($349)<br>\
-        <input type="radio" name="programType" value="4 Day \'bd AM/PM" required> 4 Day \'bd AM/PM ($279)<br>\
-        <input type="radio" name="programType" value="3 Day Full" required> 3 Day Full ($299)<br>\
-        <input type="radio" name="programType" value="3 Day \'bd AM/PM" required> 3 Day \'bd AM/PM ($229)<br>\
-        <input type="radio" name="programType" value="2 Day Full" required> 2 Day Full ($249)<br>\
-        <input type="radio" name="programType" value="2 Day \'bd AM/PM" required> 2 Day \'bd AM/PM ($189)<br>\
-        <input type="radio" name="programType" value="Daily Full" required> Daily Full ($169)<br>\
-        <input type="radio" name="programType" value="Daily \'bd AM/PM" required> Daily \'bd AM/PM ($119)<br>\
-        <input type="radio" name="programType" value="Hourly" required> Hourly ($30)<br><br>\
-\
-        <label for="halfDayPreference">For half days, which session do you prefer?</label><br>\
-        <input type="radio" name="halfDayPreference" value="AM Session"> AM Session (8:30am - 1pm)<br>\
-        <input type="radio" name="halfDayPreference" value="PM Session"> PM Session (1pm - 6pm)<br><br>\
-\
-        <label for="tshirt">Do you want to purchase a T-shirt? ($10)</label><br>\
-        <input type="radio" name="tshirt" value="Yes"> Yes<br>\
-        <input type="radio" name="tshirt" value="No"> No<br><br>\
-\
-        <input type="submit" value="Submit">\
-    </form>\
-</body>\
-</html>\
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summer Camp 2024 Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Summer Camp 2024</h1>
+    <button class="button" onclick="location.href='new-registration.html'">New Registration</button>
+    <button class="button" onclick="location.href='make-changes.html'">Make Changes to an Existing Registration</button>
+    <button class="button" onclick="location.href='admin.html'">Admin</button>
+</body>
+</html>
