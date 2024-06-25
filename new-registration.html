@@ -71,9 +71,12 @@
             display: block;
             margin: 20px auto;
         }
+        .required {
+            color: red;
+        }
     </style>
     <script>
-        async function submitForm(event) {
+        function submitForm(event) {
             event.preventDefault();
             const formData = new FormData(document.querySelector('form'));
 
@@ -181,7 +184,13 @@
             const isHourly = programType.includes('Hourly');
             document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
 
-            document.getElementById('daySelection').classList.toggle('hidden', isHalfDay);
+            const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
+            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
+                input.disabled = false;
+                input.checked = false;
+            });
+            document.getElementById('daySelection').classList.toggle('hidden', false);
+            document.querySelectorAll(`#daySelection input[name="popupDays"]:nth-child(n+${maxDays + 1})`).forEach(input => input.disabled = true);
 
             popup.dataset.programType = programType;
             popup.dataset.week = week;
@@ -219,21 +228,21 @@
     </script>
 </head>
 <body>
-    <img src="logo.png" alt="Logo" style="max-width: 300px;">
+    <img src="logo.png" alt="Logo" style="max-width: 600px;">
     <h1>Summer Camp 2024 Registration</h1>
     <div class="form-container">
         <form onsubmit="submitForm(event)">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="name">Child's Name:</label>
+                    <label for="name">Child's Name: <span class="required">*</span></label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="dob">Date of Birth/Age:</label>
+                    <label for="dob">Date of Birth/Age: <span class="required">*</span></label>
                     <input type="date" id="dob" name="dob" required>
                 </div>
                 <div class="form-group">
-                    <label for="grade">Grade (Next School Year):</label>
+                    <label for="grade">Grade (Next School Year): <span class="required">*</span></label>
                     <select id="grade" name="grade" required>
                         <option value="TK">TK</option>
                         <option value="KG">KG</option>
@@ -249,15 +258,15 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="parent1Name">Parent 1 Name:</label>
+                    <label for="parent1Name">Parent 1 Name: <span class="required">*</span></label>
                     <input type="text" id="parent1Name" name="parent1Name" required>
                 </div>
                 <div class="form-group">
-                    <label for="parent1Phone">Parent 1 Phone:</label>
-                    <input type="tel" id="parent1Phone" name="parent1Phone" required>
+                    <label for="parent1Phone">Parent 1 Phone: <span class="required">*</span></label>
+                    <input type="tel" id="parent1Phone" name="parent1Phone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
                 <div class="form-group">
-                    <label for="parent1Email">Parent 1 Email:</label>
+                    <label for="parent1Email">Parent 1 Email: <span class="required">*</span></label>
                     <input type="email" id="parent1Email" name="parent1Email" required>
                 </div>
             </div>
@@ -269,7 +278,7 @@
                 </div>
                 <div class="form-group">
                     <label for="parent2Phone">Parent 2 Phone:</label>
-                    <input type="tel" id="parent2Phone" name="parent2Phone">
+                    <input type="tel" id="parent2Phone" name="parent2Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
                 <div class="form-group">
                     <label for="parent2Email">Parent 2 Email:</label>
@@ -279,16 +288,16 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="address">Street Address:</label>
+                    <label for="address">Street Address: <span class="required">*</span></label>
                     <input type="text" id="address" name="address" required>
                 </div>
                 <div class="form-group">
-                    <label for="emergencyContactName">Emergency Contact Name:</label>
+                    <label for="emergencyContactName">Emergency Contact Name: <span class="required">*</span></label>
                     <input type="text" id="emergencyContactName" name="emergencyContactName" required>
                 </div>
                 <div class="form-group">
-                    <label for="emergencyContactPhone">Emergency Contact Phone:</label>
-                    <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required>
+                    <label for="emergencyContactPhone">Emergency Contact Phone: <span class="required">*</span></label>
+                    <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
             </div>
 
