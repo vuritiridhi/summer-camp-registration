@@ -189,7 +189,7 @@
                 input.disabled = false;
                 input.checked = false;
             });
-            document.getElementById('daySelection').classList.toggle('hidden', false);
+            document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
             document.querySelectorAll(`#daySelection input[name="popupDays"]:nth-child(n+${maxDays + 1})`).forEach(input => input.disabled = true);
 
             popup.dataset.programType = programType;
