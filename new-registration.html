@@ -11,6 +11,7 @@
         }
         .form-container {
             text-align: left;
+            margin-top: 20px;
         }
         .form-row {
             display: flex;
@@ -223,6 +224,8 @@
                     const [week, programType] = event.target.value.split(' - ');
                     if (programType.includes('4 Day') || programType.includes('3 Day') || programType.includes('2 Day') || programType.includes('1 Day') || programType.includes('Hourly')) {
                         showDaySelection(programType, week);
+                    } else if (programType.includes('5 Day ½ AM/PM')) {
+                        showDaySelection(programType, week);
                     }
                 });
             });
@@ -230,7 +233,7 @@
     </script>
 </head>
 <body>
-    <img src="/Users/ridhiv/Documents/GitHub/vuritiridhi.github.io/logo.png" alt="Logo" style="max-width: 150px;">
+    <img src="logo.png" alt="Logo" style="max-width: 150px;">
     <h1>Summer Camp 2024 Registration</h1>
     <div class="form-container">
         <form onsubmit="submitForm(event)">
@@ -326,146 +329,146 @@
                 </tr>
                 <tr>
                     <td>5 Day Full ($399)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 5 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks[June3]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[June10]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[June17]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[June24]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[July1]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[July8]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[July15]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[July22]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[July29]" value="5 Day Full"></td>
+                    <td><input type="radio" name="weeks[August5]" value="5 Day Full"></td>
                 </tr>
                 <tr>
                     <td>5 Day ½ AM/PM ($329)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 5 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June3]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June10]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June17]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June24]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July1]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July8]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July15]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July22]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July29]" value="5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[August5]" value="5 Day ½ AM/PM"></td>
                 </tr>
                 <tr>
                     <td>4 Day Full ($349)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 4 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks[June3]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[June10]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[June17]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[June24]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[July1]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[July8]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[July15]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[July22]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[July29]" value="4 Day Full"></td>
+                    <td><input type="radio" name="weeks[August5]" value="4 Day Full"></td>
                 </tr>
                 <tr>
                     <td>4 Day ½ AM/PM ($279)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 4 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June3]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June10]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June17]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June24]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July1]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July8]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July15]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July22]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July29]" value="4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[August5]" value="4 Day ½ AM/PM"></td>
                 </tr>
                 <tr>
                     <td>3 Day Full ($299)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 3 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks[June3]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[June10]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[June17]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[June24]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[July1]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[July8]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[July15]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[July22]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[July29]" value="3 Day Full"></td>
+                    <td><input type="radio" name="weeks[August5]" value="3 Day Full"></td>
                 </tr>
                 <tr>
                     <td>3 Day ½ AM/PM ($229)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 3 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June3]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June10]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June17]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June24]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July1]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July8]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July15]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July22]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July29]" value="3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[August5]" value="3 Day ½ AM/PM"></td>
                 </tr>
                 <tr>
                     <td>2 Day Full ($249)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 2 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks[June3]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[June10]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[June17]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[June24]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[July1]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[July8]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[July15]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[July22]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[July29]" value="2 Day Full"></td>
+                    <td><input type="radio" name="weeks[August5]" value="2 Day Full"></td>
                 </tr>
                 <tr>
                     <td>2 Day ½ AM/PM ($189)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 2 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June3]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June10]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June17]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June24]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July1]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July8]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July15]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July22]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July29]" value="2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[August5]" value="2 Day ½ AM/PM"></td>
                 </tr>
                 <tr>
                     <td>1 Day Full ($169)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 1 Day Full"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks[June3]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[June10]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[June17]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[June24]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[July1]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[July8]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[July15]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[July22]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[July29]" value="1 Day Full"></td>
+                    <td><input type="radio" name="weeks[August5]" value="1 Day Full"></td>
                 </tr>
                 <tr>
                     <td>1 Day ½ AM/PM ($119)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - 1 Day ½ AM/PM"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June3]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June10]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June17]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[June24]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July1]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July8]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July15]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July22]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[July29]" value="1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks[August5]" value="1 Day ½ AM/PM"></td>
                 </tr>
                 <tr>
                     <td>Hourly ($30)</td>
-                    <td><input type="radio" name="weeks" value="Week of June 3rd - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 10th - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 17th - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of June 24th - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 1st - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 8th - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 15th - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 22nd - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of July 29th - Hourly"></td>
-                    <td><input type="radio" name="weeks" value="Week of August 5th - Hourly"></td>
+                    <td><input type="radio" name="weeks[June3]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[June10]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[June17]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[June24]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[July1]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[July8]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[July15]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[July22]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[July29]" value="Hourly"></td>
+                    <td><input type="radio" name="weeks[August5]" value="Hourly"></td>
                 </tr>
             </table>
 
@@ -488,10 +491,12 @@
             <label><input type="checkbox" name="popupDays" value="Thursday"> Thursday</label><br>
             <label><input type="checkbox" name="popupDays" value="Friday"> Friday</label><br>
         </div>
+        <br>
         <div id="amPmSelection" class="hidden">
             <label><input type="radio" name="popupAmPm" value="AM"> AM Session</label><br>
             <label><input type="radio" name="popupAmPm" value="PM"> PM Session</label><br>
         </div>
+        <br>
         <div id="hourlySelection" class="hidden">
             <label for="startTime">Start Time:</label>
             <select id="startTime" name="startTime">
