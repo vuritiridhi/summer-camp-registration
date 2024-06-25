@@ -7,6 +7,10 @@
             font-family: Arial, sans-serif;
             max-width: 900px;
             margin: auto;
+            text-align: center;
+        }
+        .form-container {
+            text-align: left;
         }
         .form-row {
             display: flex;
@@ -142,10 +146,10 @@
                     case '2 Day ½ AM/PM':
                         cost += 189;
                         break;
-                    case 'Daily Full':
+                    case '1 Day Full':
                         cost += 169;
                         break;
-                    case 'Daily ½ AM/PM':
+                    case '1 Day ½ AM/PM':
                         cost += 119;
                         break;
                     case 'Hourly':
@@ -172,6 +176,9 @@
             const isHalfDay = programType.includes('½ AM/PM');
             document.getElementById('amPmSelection').classList.toggle('hidden', !isHalfDay);
 
+            const isHourly = programType.includes('Hourly');
+            document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
+
             popup.dataset.programType = programType;
             popup.dataset.week = week;
 
@@ -190,7 +197,12 @@
             const isHalfDay = popup.dataset.programType.includes('½ AM/PM');
             const halfDayText = isHalfDay ? ` (${amPmPreference.value} Session)` : '';
 
-            const selectionText = `${popup.dataset.week} - ${popup.dataset.programType}${halfDayText}: ${selectedDays.join(', ')}`;
+            const isHourly = popup.dataset.programType.includes('Hourly');
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const hourlyText = isHourly ? ` (${startTime} - ${endTime})` : '';
+
+            const selectionText = `${popup.dataset.week} - ${popup.dataset.programType}${halfDayText}${hourlyText}: ${selectedDays.join(', ')}`;
             alert(`Saved Selection: ${selectionText}`);
 
             const overlay = document.getElementById('overlay');
@@ -206,10 +218,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('input[name="weeks"]').forEach(checkbox => {
-                checkbox.addEventListener('change', (event) => {
+            document.querySelectorAll('input[name="weeks"]').forEach(radio => {
+                radio.addEventListener('change', (event) => {
                     const [week, programType] = event.target.value.split(' - ');
-                    if (programType.includes('4 Day') || programType.includes('3 Day') || programType.includes('2 Day') || programType.includes('Daily')) {
+                    if (programType.includes('4 Day') || programType.includes('3 Day') || programType.includes('2 Day') || programType.includes('1 Day') || programType.includes('Hourly')) {
                         showDaySelection(programType, week);
                     }
                 });
@@ -218,249 +230,252 @@
     </script>
 </head>
 <body>
+    <img src="/Users/ridhiv/Documents/GitHub/vuritiridhi.github.io/logo.png" alt="Logo" style="max-width: 150px;">
     <h1>Summer Camp 2024 Registration</h1>
-    <form onsubmit="submitForm(event)">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="name">Child's Name:</label>
-                <input type="text" id="name" name="name" required>
+    <div class="form-container">
+        <form onsubmit="submitForm(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Child's Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth/Age:</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="grade">Grade (Next School Year):</label>
+                    <select id="grade" name="grade" required>
+                        <option value="TK">TK</option>
+                        <option value="KG">KG</option>
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>
+                        <option value="3rd">3rd</option>
+                        <option value="4th">4th</option>
+                        <option value="5th">5th</option>
+                        <option value="6th">6th</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="dob">Date of Birth/Age:</label>
-                <input type="date" id="dob" name="dob" required>
-            </div>
-            <div class="form-group">
-                <label for="grade">Grade (Next School Year):</label>
-                <select id="grade" name="grade" required>
-                    <option value="TK">TK</option>
-                    <option value="KG">KG</option>
-                    <option value="1st">1st</option>
-                    <option value="2nd">2nd</option>
-                    <option value="3rd">3rd</option>
-                    <option value="4th">4th</option>
-                    <option value="5th">5th</option>
-                    <option value="6th">6th</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="parent1Name">Parent 1 Name:</label>
-                <input type="text" id="parent1Name" name="parent1Name" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="parent1Name">Parent 1 Name:</label>
+                    <input type="text" id="parent1Name" name="parent1Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent1Phone">Parent 1 Phone:</label>
+                    <input type="tel" id="parent1Phone" name="parent1Phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent1Email">Parent 1 Email:</label>
+                    <input type="email" id="parent1Email" name="parent1Email" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="parent1Phone">Parent 1 Phone:</label>
-                <input type="tel" id="parent1Phone" name="parent1Phone" required>
-            </div>
-            <div class="form-group">
-                <label for="parent1Email">Parent 1 Email:</label>
-                <input type="email" id="parent1Email" name="parent1Email" required>
-            </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="parent2Name">Parent 2 Name:</label>
-                <input type="text" id="parent2Name" name="parent2Name">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="parent2Name">Parent 2 Name:</label>
+                    <input type="text" id="parent2Name" name="parent2Name">
+                </div>
+                <div class="form-group">
+                    <label for="parent2Phone">Parent 2 Phone:</label>
+                    <input type="tel" id="parent2Phone" name="parent2Phone">
+                </div>
+                <div class="form-group">
+                    <label for="parent2Email">Parent 2 Email:</label>
+                    <input type="email" id="parent2Email" name="parent2Email">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="parent2Phone">Parent 2 Phone:</label>
-                <input type="tel" id="parent2Phone" name="parent2Phone">
-            </div>
-            <div class="form-group">
-                <label for="parent2Email">Parent 2 Email:</label>
-                <input type="email" id="parent2Email" name="parent2Email">
-            </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="address">Street Address:</label>
-                <input type="text" id="address" name="address" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="address">Street Address:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyContactName">Emergency Contact Name:</label>
+                    <input type="text" id="emergencyContactName" name="emergencyContactName" required>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyContactPhone">Emergency Contact Phone:</label>
+                    <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="emergencyContactName">Emergency Contact Name:</label>
-                <input type="text" id="emergencyContactName" name="emergencyContactName" required>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="notes">Allergies/Special Notes/Dietary Restrictions:</label>
+                    <textarea id="notes" name="notes"></textarea>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="emergencyContactPhone">Emergency Contact Phone:</label>
-                <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required>
-            </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="notes">Allergies/Special Notes/Dietary Restrictions:</label>
-                <textarea id="notes" name="notes"></textarea>
-            </div>
-        </div>
+            <table>
+                <tr>
+                    <th>Program Type</th>
+                    <th>Week of June 3rd</th>
+                    <th>Week of June 10th</th>
+                    <th>Week of June 17th</th>
+                    <th>Week of June 24th</th>
+                    <th>Week of July 1st</th>
+                    <th>Week of July 8th</th>
+                    <th>Week of July 15th</th>
+                    <th>Week of July 22nd</th>
+                    <th>Week of July 29th</th>
+                    <th>Week of August 5th</th>
+                </tr>
+                <tr>
+                    <td>5 Day Full ($399)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 5 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 5 Day Full"></td>
+                </tr>
+                <tr>
+                    <td>5 Day ½ AM/PM ($329)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 5 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 5 Day ½ AM/PM"></td>
+                </tr>
+                <tr>
+                    <td>4 Day Full ($349)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 4 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 4 Day Full"></td>
+                </tr>
+                <tr>
+                    <td>4 Day ½ AM/PM ($279)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 4 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 4 Day ½ AM/PM"></td>
+                </tr>
+                <tr>
+                    <td>3 Day Full ($299)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 3 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 3 Day Full"></td>
+                </tr>
+                <tr>
+                    <td>3 Day ½ AM/PM ($229)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 3 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 3 Day ½ AM/PM"></td>
+                </tr>
+                <tr>
+                    <td>2 Day Full ($249)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 2 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 2 Day Full"></td>
+                </tr>
+                <tr>
+                    <td>2 Day ½ AM/PM ($189)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 2 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 2 Day ½ AM/PM"></td>
+                </tr>
+                <tr>
+                    <td>1 Day Full ($169)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 1 Day Full"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 1 Day Full"></td>
+                </tr>
+                <tr>
+                    <td>1 Day ½ AM/PM ($119)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - 1 Day ½ AM/PM"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - 1 Day ½ AM/PM"></td>
+                </tr>
+                <tr>
+                    <td>Hourly ($30)</td>
+                    <td><input type="radio" name="weeks" value="Week of June 3rd - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 10th - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 17th - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of June 24th - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 1st - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 8th - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 15th - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 22nd - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of July 29th - Hourly"></td>
+                    <td><input type="radio" name="weeks" value="Week of August 5th - Hourly"></td>
+                </tr>
+            </table>
 
-        <table>
-            <tr>
-                <th>Program Type</th>
-                <th>Week of June 3rd</th>
-                <th>Week of June 10th</th>
-                <th>Week of June 17th</th>
-                <th>Week of June 24th</th>
-                <th>Week of July 1st</th>
-                <th>Week of July 8th</th>
-                <th>Week of July 15th</th>
-                <th>Week of July 22nd</th>
-                <th>Week of July 29th</th>
-                <th>Week of August 5th</th>
-            </tr>
-            <tr>
-                <td>5 Day Full ($399)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 5 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 5 Day Full"></td>
-            </tr>
-            <tr>
-                <td>5 Day ½ AM/PM ($329)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 5 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 5 Day ½ AM/PM"></td>
-            </tr>
-            <tr>
-                <td>4 Day Full ($349)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 4 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 4 Day Full"></td>
-            </tr>
-            <tr>
-                <td>4 Day ½ AM/PM ($279)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 4 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 4 Day ½ AM/PM"></td>
-            </tr>
-            <tr>
-                <td>3 Day Full ($299)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 3 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 3 Day Full"></td>
-            </tr>
-            <tr>
-                <td>3 Day ½ AM/PM ($229)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 3 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 3 Day ½ AM/PM"></td>
-            </tr>
-            <tr>
-                <td>2 Day Full ($249)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 2 Day Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 2 Day Full"></td>
-            </tr>
-            <tr>
-                <td>2 Day ½ AM/PM ($189)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - 2 Day ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - 2 Day ½ AM/PM"></td>
-            </tr>
-            <tr>
-                <td>Daily Full ($169)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - Daily Full"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - Daily Full"></td>
-            </tr>
-            <tr>
-                <td>Daily ½ AM/PM ($119)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - Daily ½ AM/PM"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - Daily ½ AM/PM"></td>
-            </tr>
-            <tr>
-                <td>Hourly ($30)</td>
-                <td><input type="checkbox" name="weeks" value="Week of June 3rd - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 10th - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 17th - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of June 24th - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 1st - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 8th - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 15th - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 22nd - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of July 29th - Hourly"></td>
-                <td><input type="checkbox" name="weeks" value="Week of August 5th - Hourly"></td>
-            </tr>
-        </table>
+            <label for="tshirt">Do you want to purchase a T-shirt? ($10)</label><br>
+            <input type="radio" name="tshirt" value="Yes" required> Yes<br>
+            <input type="radio" name="tshirt" value="No" required> No<br><br>
 
-        <label for="tshirt">Do you want to purchase a T-shirt? ($10)</label><br>
-        <input type="radio" name="tshirt" value="Yes" required> Yes<br>
-        <input type="radio" name="tshirt" value="No" required> No<br><br>
-
-        <input type="submit" value="Submit">
-    </form>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
     <div id="overlay" class="overlay"></div>
 
@@ -476,6 +491,55 @@
         <div id="amPmSelection" class="hidden">
             <label><input type="radio" name="popupAmPm" value="AM"> AM Session</label><br>
             <label><input type="radio" name="popupAmPm" value="PM"> PM Session</label><br>
+        </div>
+        <div id="hourlySelection" class="hidden">
+            <label for="startTime">Start Time:</label>
+            <select id="startTime" name="startTime">
+                <option value="8:30am">8:30am</option>
+                <option value="9:00am">9:00am</option>
+                <option value="9:30am">9:30am</option>
+                <option value="10:00am">10:00am</option>
+                <option value="10:30am">10:30am</option>
+                <option value="11:00am">11:00am</option>
+                <option value="11:30am">11:30am</option>
+                <option value="12:00pm">12:00pm</option>
+                <option value="12:30pm">12:30pm</option>
+                <option value="1:00pm">1:00pm</option>
+                <option value="1:30pm">1:30pm</option>
+                <option value="2:00pm">2:00pm</option>
+                <option value="2:30pm">2:30pm</option>
+                <option value="3:00pm">3:00pm</option>
+                <option value="3:30pm">3:30pm</option>
+                <option value="4:00pm">4:00pm</option>
+                <option value="4:30pm">4:30pm</option>
+                <option value="5:00pm">5:00pm</option>
+                <option value="5:30pm">5:30pm</option>
+                <option value="6:00pm">6:00pm</option>
+            </select>
+            <br>
+            <label for="endTime">End Time:</label>
+            <select id="endTime" name="endTime">
+                <option value="8:30am">8:30am</option>
+                <option value="9:00am">9:00am</option>
+                <option value="9:30am">9:30am</option>
+                <option value="10:00am">10:00am</option>
+                <option value="10:30am">10:30am</option>
+                <option value="11:00am">11:00am</option>
+                <option value="11:30am">11:30am</option>
+                <option value="12:00pm">12:00pm</option>
+                <option value="12:30pm">12:30pm</option>
+                <option value="1:00pm">1:00pm</option>
+                <option value="1:30pm">1:30pm</option>
+                <option value="2:00pm">2:00pm</option>
+                <option value="2:30pm">2:30pm</option>
+                <option value="3:00pm">3:00pm</option>
+                <option value="3:30pm">3:30pm</option>
+                <option value="4:00pm">4:00pm</option>
+                <option value="4:30pm">4:30pm</option>
+                <option value="5:00pm">5:00pm</option>
+                <option value="5:30pm">5:30pm</option>
+                <option value="6:00pm">6:00pm</option>
+            </select>
         </div>
         <button onclick="saveDaySelection()">Save</button>
         <button onclick="cancelDaySelection()">Cancel</button>
