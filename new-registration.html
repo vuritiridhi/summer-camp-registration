@@ -68,6 +68,8 @@
         #submitButton {
             font-size: 1.2em;
             padding: 10px 20px;
+            display: block;
+            margin: 20px auto;
         }
     </style>
     <script>
@@ -169,13 +171,17 @@
         function showDaySelection(programType, week) {
             const overlay = document.getElementById('overlay');
             const popup = document.getElementById('daySelectionPopup');
-            document.getElementById('popupTitle').innerText = `Select Days for ${week} - ${programType}`;
+            document.getElementById('popupTitle').innerText = programType.includes('Hourly') 
+                ? `Select Timings for ${week} - ${programType}`
+                : `Select Days for ${week} - ${programType}`;
 
             const isHalfDay = programType.includes('½ AM/PM');
             document.getElementById('amPmSelection').classList.toggle('hidden', !isHalfDay);
 
             const isHourly = programType.includes('Hourly');
             document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
+
+            document.getElementById('daySelection').classList.toggle('hidden', isHalfDay);
 
             popup.dataset.programType = programType;
             popup.dataset.week = week;
@@ -185,25 +191,9 @@
         }
 
         function saveDaySelection() {
-            const popup = document.getElementById('daySelectionPopup');
-            const selectedDays = [];
-            document.querySelectorAll('#daySelectionPopup input[name="popupDays"]:checked').forEach(checkbox => {
-                selectedDays.push(checkbox.value);
-            });
-
-            const amPmPreference = document.querySelector('input[name="popupAmPm"]:checked');
-            const isHalfDay = popup.dataset.programType.includes('½ AM/PM');
-            const halfDayText = isHalfDay ? ` (${amPmPreference.value} Session)` : '';
-
-            const isHourly = popup.dataset.programType.includes('Hourly');
-            const startTime = document.getElementById('startTime').value;
-            const endTime = document.getElementById('endTime').value;
-            const hourlyText = isHourly ? ` (${startTime} - ${endTime})` : '';
-
-            const selectionText = `${popup.dataset.week} - ${popup.dataset.programType}${halfDayText}${hourlyText}: ${selectedDays.join(', ')}`;
-
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
+            const popup = document.getElementById('daySelectionPopup');
             popup.style.display = 'none';
         }
 
@@ -476,7 +466,7 @@
 
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
-        <div id="daySelection" class="hidden">
+        <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday"> Monday</label><br>
             <label><input type="checkbox" name="popupDays" value="Tuesday"> Tuesday</label><br>
             <label><input type="checkbox" name="popupDays" value="Wednesday"> Wednesday</label><br>
