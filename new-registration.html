@@ -5,6 +5,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: auto;
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .form-group:last-child {
+            margin-right: 0;
         }
         table {
             width: 100%;
@@ -17,6 +31,10 @@
         th, td {
             padding: 10px;
             text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
         }
         .hidden {
             display: none;
@@ -202,44 +220,81 @@
 <body>
     <h1>Summer Camp 2024 Registration</h1>
     <form onsubmit="submitForm(event)">
-        <label for="name">Child's Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Child's Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth/Age:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="grade">Grade (Next School Year):</label>
+                <select id="grade" name="grade" required>
+                    <option value="TK">TK</option>
+                    <option value="KG">KG</option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
+                    <option value="5th">5th</option>
+                    <option value="6th">6th</option>
+                </select>
+            </div>
+        </div>
 
-        <label for="dob">Date of Birth/Age:</label>
-        <input type="date" id="dob" name="dob" required><br><br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="parent1Name">Parent 1 Name:</label>
+                <input type="text" id="parent1Name" name="parent1Name" required>
+            </div>
+            <div class="form-group">
+                <label for="parent1Phone">Parent 1 Phone:</label>
+                <input type="tel" id="parent1Phone" name="parent1Phone" required>
+            </div>
+            <div class="form-group">
+                <label for="parent1Email">Parent 1 Email:</label>
+                <input type="email" id="parent1Email" name="parent1Email" required>
+            </div>
+        </div>
 
-        <label for="grade">Grade:</label>
-        <input type="text" id="grade" name="grade" required><br><br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="parent2Name">Parent 2 Name:</label>
+                <input type="text" id="parent2Name" name="parent2Name">
+            </div>
+            <div class="form-group">
+                <label for="parent2Phone">Parent 2 Phone:</label>
+                <input type="tel" id="parent2Phone" name="parent2Phone">
+            </div>
+            <div class="form-group">
+                <label for="parent2Email">Parent 2 Email:</label>
+                <input type="email" id="parent2Email" name="parent2Email">
+            </div>
+        </div>
 
-        <label for="parent1Name">Parent 1 Name:</label>
-        <input type="text" id="parent1Name" name="parent1Name" required><br><br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="address">Street Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="emergencyContactName">Emergency Contact Name:</label>
+                <input type="text" id="emergencyContactName" name="emergencyContactName" required>
+            </div>
+            <div class="form-group">
+                <label for="emergencyContactPhone">Emergency Contact Phone:</label>
+                <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required>
+            </div>
+        </div>
 
-        <label for="parent1Phone">Parent 1 Phone:</label>
-        <input type="tel" id="parent1Phone" name="parent1Phone" required><br><br>
-
-        <label for="parent1Email">Parent 1 Email:</label>
-        <input type="email" id="parent1Email" name="parent1Email" required><br><br>
-
-        <label for="parent2Name">Parent 2 Name:</label>
-        <input type="text" id="parent2Name" name="parent2Name"><br><br>
-
-        <label for="parent2Phone">Parent 2 Phone:</label>
-        <input type="tel" id="parent2Phone" name="parent2Phone"><br><br>
-
-        <label for="parent2Email">Parent 2 Email:</label>
-        <input type="email" id="parent2Email" name="parent2Email"><br><br>
-
-        <label for="emergencyContactName">Emergency Contact Name:</label>
-        <input type="text" id="emergencyContactName" name="emergencyContactName" required><br><br>
-
-        <label for="emergencyContactPhone">Emergency Contact Phone:</label>
-        <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required><br><br>
-
-        <label for="address">Street Address:</label>
-        <input type="text" id="address" name="address" required><br><br>
-
-        <label for="notes">Allergies/Special Notes/Dietary Restrictions:</label>
-        <input type="text" id="notes" name="notes"><br><br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="notes">Allergies/Special Notes/Dietary Restrictions:</label>
+                <textarea id="notes" name="notes"></textarea>
+            </div>
+        </div>
 
         <table>
             <tr>
