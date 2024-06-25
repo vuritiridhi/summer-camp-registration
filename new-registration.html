@@ -65,6 +65,10 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 50;
         }
+        #submitButton {
+            font-size: 1.2em;
+            padding: 10px 20px;
+        }
     </style>
     <script>
         async function submitForm(event) {
@@ -72,8 +76,8 @@
             const formData = new FormData(document.querySelector('form'));
 
             const selectedWeeks = [];
-            document.querySelectorAll('input[name^="weeks"]:checked').forEach(checkbox => {
-                selectedWeeks.push(checkbox.value);
+            document.querySelectorAll('input[name^="weeks"]:checked').forEach(radio => {
+                selectedWeeks.push(radio.value);
             });
 
             const selectedDays = [];
@@ -104,16 +108,9 @@
 
             data.totalCost = calculateTotalCost(data);
 
-            const response = await fetch('https://vuritiridhi.github.io', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            const result = await response.json();
-            alert(result.message);
+            // Redirect to a new page showing the total amount due
+            const queryString = new URLSearchParams(data).toString();
+            window.location.href = `total.html?${queryString}`;
         }
 
         function calculateTotalCost(data) {
@@ -204,7 +201,6 @@
             const hourlyText = isHourly ? ` (${startTime} - ${endTime})` : '';
 
             const selectionText = `${popup.dataset.week} - ${popup.dataset.programType}${halfDayText}${hourlyText}: ${selectedDays.join(', ')}`;
-            alert(`Saved Selection: ${selectionText}`);
 
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
@@ -472,22 +468,7 @@
                 </tr>
             </table>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="totalProgramCost">Total Program Cost:</label>
-                    <input type="text" id="totalProgramCost" name="totalProgramCost" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="totalTshirtCost">Total T-shirt Cost ($10 per t-shirt):</label>
-                    <input type="text" id="totalTshirtCost" name="totalTshirtCost" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="totalSuppliesCost">Total Supplies and Materials Fee ($10 per week, capped at $60):</label>
-                    <input type="text" id="totalSuppliesCost" name="totalSuppliesCost" readonly>
-                </div>
-            </div>
-
-            <input type="submit" value="Submit">
+            <input type="submit" id="submitButton" value="Submit">
         </form>
     </div>
 
@@ -495,7 +476,7 @@
 
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
-        <div>
+        <div id="daySelection" class="hidden">
             <label><input type="checkbox" name="popupDays" value="Monday"> Monday</label><br>
             <label><input type="checkbox" name="popupDays" value="Tuesday"> Tuesday</label><br>
             <label><input type="checkbox" name="popupDays" value="Wednesday"> Wednesday</label><br>
