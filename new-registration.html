@@ -1,0 +1,98 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2759
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html>\
+<head>\
+    <title>Summer Camp 2024 Registration</title>\
+    <script>\
+        async function submitForm() \{\
+            const formData = new FormData(document.querySelector('form'));\
+\
+            // Get all form values\
+            const data = \{\
+                name: formData.get('name'),\
+                dob: formData.get('dob'),\
+                grade: formData.get('grade'),\
+                parent1Name: formData.get('parent1Name'),\
+                parent1Phone: formData.get('parent1Phone'),\
+                parent1Email: formData.get('parent1Email'),\
+                parent2Name: formData.get('parent2Name'),\
+                parent2Phone: formData.get('parent2Phone'),\
+                parent2Email: formData.get('parent2Email'),\
+                emergencyContactName: formData.get('emergencyContactName'),\
+                emergencyContactPhone: formData.get('emergencyContactPhone'),\
+                address: formData.get('address'),\
+                notes: formData.get('notes'),\
+                selectedWeeks: formData.getAll('weeks').join(', '),\
+                selectedDays: formData.getAll('days').join(', '),\
+                programType: formData.get('programType'),\
+                halfDayPreference: formData.get('halfDayPreference'),\
+                tshirt: formData.get('tshirt')\
+            \};\
+\
+            // Perform calculations for total cost\
+            data.totalCost = calculateTotalCost(data);\
+\
+            // Send data to Google Sheets via Apps Script Web App\
+            const response = await fetch('YOUR_WEB_APP_URL', \{\
+                method: 'POST',\
+                body: JSON.stringify(data),\
+                headers: \{\
+                    'Content-Type': 'application/json'\
+                \}\
+            \});\
+\
+            const result = await response.json();\
+            alert(result.message);\
+        \}\
+\
+        function calculateTotalCost(data) \{\
+            // Implement your cost calculation logic here\
+            // Example:\
+            let cost = 0;\
+            const weeks = data.selectedWeeks.split(', ');\
+            const days = data.selectedDays.split(', ');\
+\
+            // Calculate base cost\
+            weeks.forEach(week => \{\
+                switch (data.programType) \{\
+                    case '5 Day Full':\
+                        cost += 399;\
+                        break;\
+                    case '5 Day \'bd AM/PM':\
+                        cost += 329;\
+                        break;\
+                    // Add other cases for different program types\
+                \}\
+            \});\
+\
+            // Add supplies and materials fee\
+            const suppliesFee = Math.min(weeks.length * 10, 60);\
+            cost += suppliesFee;\
+\
+            // Add T-shirt fee if attending any Friday\
+            if (days.includes('Friday')) \{\
+                cost += 10;\
+            \}\
+\
+            // Add any additional charges\
+\
+            return cost;\
+        \}\
+    </script>\
+</head>\
+<body>\
+    <h1>Summer Camp 2024 Registration</h1>\
+    <form onsubmit="event.preventDefault(); submitForm();">\
+        <!-- Include all form fields here as previously defined -->\
+        <!-- ... -->\
+        <input type="submit" value="Submit">\
+    </form>\
+</body>\
+</html>\
+}
