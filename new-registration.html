@@ -68,11 +68,39 @@
         #submitButton {
             font-size: 1.2em;
             padding: 10px 20px;
-            display: block;
-            margin: 20px auto;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        #backButton {
+            font-size: 1em;
+            padding: 10px 20px;
+            display: inline-block;
+            margin-top: 20px;
+            position: absolute;
+            left: 20px;
+            top: 20px;
         }
         .required {
             color: red;
+        }
+        #holidays {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #discounts {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: left;
+        }
+        #extras {
+            margin-bottom: 20px;
+            text-align: left;
+            color: blue;
+        }
+        #cancellation {
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
     <script>
@@ -117,7 +145,7 @@
 
             // Redirect to a new page showing the total amount due
             const queryString = new URLSearchParams(data).toString();
-            window.location.href = `total.html?${queryString}`;
+            window.location.href = `confirmation.html?${queryString}`;
         }
 
         function calculateTotalCost(data) {
@@ -257,7 +285,14 @@
     </script>
 </head>
 <body>
-    <img src="logo.png" alt="Logo" style="max-width: 600px;">
+    <a id="backButton" href="index.html">Back</a>
+    <div id="discounts">
+        <strong>Current Discounts available till April 30th:</strong><br>
+        15% Early Bird - Only applicable for 5-Day Full Programs and if signing up for 4 or more weeks<br>
+        10% Early Bird - For all other 5 or 4 day programs and if signing up for 6 or more weeks<br>
+        5% Sibling discount (applied to only one child)
+    </div>
+    <img src="logo.png" alt="Logo" style="max-width: 300px;">
     <h1>Summer Camp 2024 Registration</h1>
     <div class="form-container">
         <form onsubmit="submitForm(event)">
@@ -328,9 +363,10 @@
                     <label for="emergencyContactPhone">Emergency Contact Phone:</label>
                     <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
+                <input type="submit" id="submitButton" value="Submit">
             </div>
 
-            <div class="form-row" id="physicianFields" class="hidden">
+            <div class="form-row hidden" id="physicianFields">
                 <div class="form-group">
                     <label for="physicianName">Physician Name: <span class="required">*</span></label>
                     <input type="text" id="physicianName" name="physicianName">
@@ -346,6 +382,10 @@
                     <label for="notes">Allergies/Special Notes/Dietary Restrictions:</label>
                     <textarea id="notes" name="notes"></textarea>
                 </div>
+            </div>
+
+            <div id="extras">
+                ** All Extra-Curricular Activities Included at no additional charge
             </div>
 
             <table>
@@ -507,9 +547,11 @@
                 </tr>
             </table>
 
-            <input type="submit" id="submitButton" value="Submit">
+            <div id="cancellation">*50% of the fee will be deducted for cancellation</div>
         </form>
     </div>
+
+    <div id="holidays">HOLIDAYS - June 19th, July 4th</div>
 
     <div id="overlay" class="overlay"></div>
 
