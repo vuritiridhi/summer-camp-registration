@@ -102,6 +102,8 @@
                 parent2Email: formData.get('parent2Email'),
                 emergencyContactName: formData.get('emergencyContactName'),
                 emergencyContactPhone: formData.get('emergencyContactPhone'),
+                physicianName: formData.get('physicianName'),
+                physicianPhone: formData.get('physicianPhone'),
                 address: formData.get('address'),
                 notes: formData.get('notes'),
                 selectedWeeks: selectedWeeks.join(', '),
@@ -184,7 +186,7 @@
             const isHourly = programType.includes('Hourly');
             document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
 
-            const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
+            const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') || programType.includes('Hourly') ? 1 : 5;
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
                 input.checked = false;
@@ -197,6 +199,17 @@
 
             overlay.style.display = 'block';
             popup.style.display = 'block';
+
+            // Disable excess checkboxes if max selected
+            const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
+                    checkboxes.forEach(cb => {
+                        cb.disabled = !cb.checked && checkedCount >= maxDays;
+                    });
+                });
+            });
         }
 
         function saveDaySelection() {
@@ -213,6 +226,16 @@
             popup.style.display = 'none';
         }
 
+        function checkGrade() {
+            const grade = document.getElementById('grade').value;
+            const physicianFields = document.getElementById('physicianFields');
+            if (grade === 'TK' || grade === 'KG') {
+                physicianFields.classList.remove('hidden');
+            } else {
+                physicianFields.classList.add('hidden');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('input[name^="weeks"]').forEach(radio => {
                 radio.addEventListener('change', (event) => {
@@ -224,6 +247,8 @@
                     }
                 });
             });
+
+            document.getElementById('grade').addEventListener('change', checkGrade);
         });
     </script>
 </head>
@@ -256,6 +281,17 @@
                 </div>
             </div>
 
+            <div class="form-row hidden" id="physicianFields">
+                <div class="form-group">
+                    <label for="physicianName">Physician Name: <span class="required">*</span></label>
+                    <input type="text" id="physicianName" name="physicianName">
+                </div>
+                <div class="form-group">
+                    <label for="physicianPhone">Physician Phone: <span class="required">*</span></label>
+                    <input type="tel" id="physicianPhone" name="physicianPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
+                </div>
+            </div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="parent1Name">Parent 1 Name: <span class="required">*</span></label>
@@ -273,16 +309,16 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="parent2Name">Parent 2 Name:</label>
-                    <input type="text" id="parent2Name" name="parent2Name">
+                    <label for="parent2Name">Parent 2 Name: <span class="required">*</span></label>
+                    <input type="text" id="parent2Name" name="parent2Name" required>
                 </div>
                 <div class="form-group">
-                    <label for="parent2Phone">Parent 2 Phone:</label>
-                    <input type="tel" id="parent2Phone" name="parent2Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
+                    <label for="parent2Phone">Parent 2 Phone: <span class="required">*</span></label>
+                    <input type="tel" id="parent2Phone" name="parent2Phone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
                 <div class="form-group">
-                    <label for="parent2Email">Parent 2 Email:</label>
-                    <input type="email" id="parent2Email" name="parent2Email">
+                    <label for="parent2Email">Parent 2 Email: <span class="required">*</span></label>
+                    <input type="email" id="parent2Email" name="parent2Email" required>
                 </div>
             </div>
 
@@ -292,12 +328,12 @@
                     <input type="text" id="address" name="address" required>
                 </div>
                 <div class="form-group">
-                    <label for="emergencyContactName">Emergency Contact Name: <span class="required">*</span></label>
-                    <input type="text" id="emergencyContactName" name="emergencyContactName" required>
+                    <label for="emergencyContactName">Emergency Contact Name:</label>
+                    <input type="text" id="emergencyContactName" name="emergencyContactName">
                 </div>
                 <div class="form-group">
-                    <label for="emergencyContactPhone">Emergency Contact Phone: <span class="required">*</span></label>
-                    <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
+                    <label for="emergencyContactPhone">Emergency Contact Phone:</label>
+                    <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
             </div>
 
