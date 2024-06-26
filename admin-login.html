@@ -12,12 +12,13 @@
             color: #333;
         }
         .header img {
-            max-width: 300px;
+            max-width: 200px;
             display: block;
-            margin: 0 auto;
+            margin: 0 auto 20px;
         }
         h1 {
             text-align: center;
+            font-size: 2em;
             margin-bottom: 20px;
         }
         .container {
@@ -59,22 +60,25 @@
             margin-top: 20px;
             display: none;
         }
-        .back-button {
+        #backButton {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
-        }
-        .back-button img {
-            width: 20px;
-            height: 20px;
+            position: absolute;
+            left: 20px;
+            top: 20px;
             cursor: pointer;
+            border: none;
+            background: none;
+        }
+        #backButton img {
+            height: 48px;
         }
     </style>
 </head>
 <body>
-    <div class="back-button">
-        <a href="index.html"><img src="back button.svg" alt="Back"></a>
-    </div>
+    <button id="backButton" onclick="window.location.href='index.html'">
+        <img src="back button.svg" alt="Back">
+    </button>
     <div class="header">
         <img src="logo.png" alt="Logo">
     </div>
