@@ -89,16 +89,16 @@
             let errorMessages = [];
 
             if (!email) {
-                errorMessages.push('Please enter a valid email address');
+                errorMessages.push('Please enter a valid email address.');
             } else {
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailPattern.test(email)) {
-                    errorMessages.push('Please enter a valid email address');
+                    errorMessages.push('Please enter a valid email address.');
                 }
             }
 
             if (!password) {
-                errorMessages.push('Please enter a password');
+                errorMessages.push('Please enter a password.');
             }
 
             if (errorMessages.length > 0) {
