@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    function formatDate(input) {
+        let value = input.value.replace(/\D/g, '');
+        if (value.length >= 4) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
+        } else if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2);
+        }
+        input.value = value;
+    }
     <title>Summer Camp 2024 Registration</title>
     <style>
         body {
@@ -136,6 +145,9 @@
             font-size: 1.5em;
             margin-bottom: 0;
         }
+        <script>
+</script>
+
     </style>
     <script>
         function submitForm(event) {
