@@ -70,6 +70,10 @@
             padding: 10px 20px;
             display: inline-block;
             margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
         #backButton {
             font-size: 1em;
@@ -79,6 +83,9 @@
             position: absolute;
             left: 20px;
             top: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
         .required {
             color: red;
@@ -86,12 +93,14 @@
         #holidays {
             margin-top: 20px;
             font-weight: bold;
+            text-align: right;
         }
         #discounts {
             position: absolute;
             top: 20px;
             right: 20px;
             text-align: left;
+            font-size: 0.8em;
         }
         #extras {
             margin-bottom: 20px;
@@ -101,6 +110,7 @@
         #cancellation {
             margin-top: 20px;
             font-weight: bold;
+            text-align: left;
         }
     </style>
     <script>
@@ -285,13 +295,15 @@
     </script>
 </head>
 <body>
-    <a id="backButton" href="index.html">Back</a>
     <div id="discounts">
         <strong>Current Discounts available till April 30th:</strong><br>
         15% Early Bird - Only applicable for 5-Day Full Programs and if signing up for 4 or more weeks<br>
         10% Early Bird - For all other 5 or 4 day programs and if signing up for 6 or more weeks<br>
         5% Sibling discount (applied to only one child)
     </div>
+    <button id="backButton" onclick="window.location.href='index.html'">
+        <img src="back_icon.png" alt="Back" style="height: 24px;">
+    </button>
     <img src="logo.png" alt="Logo" style="max-width: 300px;">
     <h1>Summer Camp 2024 Registration</h1>
     <div class="form-container">
@@ -363,7 +375,6 @@
                     <label for="emergencyContactPhone">Emergency Contact Phone:</label>
                     <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format: 123-456-7890">
                 </div>
-                <input type="submit" id="submitButton" value="Submit">
             </div>
 
             <div class="form-row hidden" id="physicianFields">
@@ -547,11 +558,14 @@
                 </tr>
             </table>
 
-            <div id="cancellation">*50% of the fee will be deducted for cancellation</div>
+            <div class="form-row">
+                <div id="holidays">HOLIDAYS - June 19th, July 4th</div>
+                <div id="cancellation">*50% of the fee will be deducted for cancellation</div>
+            </div>
+
+            <button type="submit" id="submitButton">Submit</button>
         </form>
     </div>
-
-    <div id="holidays">HOLIDAYS - June 19th, July 4th</div>
 
     <div id="overlay" class="overlay"></div>
 
