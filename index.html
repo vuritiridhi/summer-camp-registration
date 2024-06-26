@@ -62,10 +62,18 @@
             color: #007bff;
             display: block;
             text-align: right;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+    <div style="position: absolute; top: 20px; right: 20px;">
+        <label for="scheduleDropdown">View Our Schedules:</label>
+        <select id="scheduleDropdown" name="scheduleDropdown" style="font-size: 0.8em;">
+            <option value="tk-kg">TK and KG</option>
+            <option value="1st-up">1st Grade and Up</option>
+        </select>
+    </div>
     <div class="header">
         <img src="logo.png" alt="Logo">
     </div>
@@ -79,6 +87,6 @@
             <img src="SC Flyer.pdf" alt="Summer Camp Flyer">
         </div>
     </div>
-    <a href="admin.html" class="admin-link">Admin</a>
+    <a href="admin.html" class="admin-link" style="margin-bottom: 20px;">Admin</a>
 </body>
 </html>
