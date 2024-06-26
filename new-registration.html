@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    function formatDate(input) {
-        let value = input.value.replace(/\D/g, '');
-        if (value.length >= 4) {
-            value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
-        } else if (value.length >= 2) {
-            value = value.slice(0, 2) + '/' + value.slice(2);
-        }
-        input.value = value;
-    }
     <title>Summer Camp 2024 Registration</title>
     <style>
         body {
@@ -192,6 +183,16 @@
             // Redirect to a new page showing the total amount due
             const queryString = new URLSearchParams(data).toString();
             window.location.href = `confirmation.html?${queryString}`;
+        }
+
+        function formatDate(input) {
+        let value = input.value.replace(/\D/g, '');
+        if (value.length >= 4) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
+        } else if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2);
+        }
+        input.value = value;
         }
 
         function calculateTotalCost(data) {
