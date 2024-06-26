@@ -68,23 +68,21 @@
         #submitButton {
             font-size: 1.2em;
             padding: 10px 20px;
-            display: inline-block;
-            margin-top: 20px;
+            display: block;
+            margin: 20px auto;
             background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
             text-align: center;
-            margin-left: auto;
-            margin-right: auto;
         }
         #backButton {
             font-size: 1em;
-            padding: 10px 20px;
+            padding: 20px;
             display: inline-block;
             margin-top: 20px;
             position: absolute;
-            left: 20px;
+            left: 50px;
             top: 20px;
             background: none;
             border: none;
@@ -99,12 +97,9 @@
             text-align: right;
         }
         #discounts {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: left;
+            text-align: center;
             font-size: 0.8em;
+            margin-top: 20px;
         }
         #extras {
             margin-bottom: 20px;
@@ -302,14 +297,8 @@
 </head>
 <body>
     <button id="backButton" onclick="window.location.href='index.html'">
-        <img src="back button.jpeg" alt="Back" style="height: 24px;">
+        <img src="back button.jpeg" alt="Back" style="height: 48px;">
     </button>
-    <div id="discounts">
-        <strong>Current Discounts available till April 30th:</strong><br>
-        15% Early Bird - Only applicable for 5-Day Full Programs and if signing up for 4 or more weeks<br>
-        10% Early Bird - For all other 5 or 4 day programs and if signing up for 6 or more weeks<br>
-        5% Sibling discount (applied to only one child)
-    </div>
     <img src="logo.png" alt="Logo" style="max-width: 300px;">
     <h1>Summer Camp 2024 Registration</h1>
     <br>
@@ -571,6 +560,12 @@
             </div>
 
             <button type="submit" id="submitButton">Submit</button>
+            <div id="discounts">
+                <strong>Current Discounts available till April 30th:</strong><br>
+                15% Early Bird - Only applicable for 5-Day Full Programs and if signing up for 4 or more weeks<br>
+                10% Early Bird - For all other 5 or 4 day programs and if signing up for 6 or more weeks<br>
+                5% Sibling discount (applied to only one child)
+            </div>
         </form>
     </div>
 
