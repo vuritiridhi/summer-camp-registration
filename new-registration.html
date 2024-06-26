@@ -27,19 +27,30 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             text-align: center;
+            margin-bottom: 20px;
         }
         .form-group {
             margin: 20px 0;
         }
+        .form-group label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
         .form-group input, .form-group select {
-            width: calc(33.33% - 20px);
+            width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 10px 10px 0;
+            margin: 10px 0;
             border-radius: 4px;
             border: 1px solid #ccc;
         }
-        .form-group select {
-            margin-left: 0;
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            resize: vertical;
         }
         .button-container {
             margin: 20px 0;
@@ -56,115 +67,331 @@
         .button-container button:hover {
             background-color: #0056b3;
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-        }
-        .grid-container div {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: #f9f9f9;
-        }
-        .grid-container input[type="checkbox"] {
-            display: none;
-        }
-        .grid-container label {
-            display: block;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 4px;
-            background: #fff;
-            border: 1px solid #ccc;
-        }
-        .grid-container input[type="checkbox"]:checked + label {
-            background: #007bff;
-            color: #fff;
-            border-color: #007bff;
-        }
-        .grid-container input[type="checkbox"]:disabled + label {
-            background: #e0e0e0;
-            cursor: not-allowed;
-        }
         .error-message {
             color: red;
             margin-top: 20px;
             display: none;
         }
+        #backButton {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        #backButton img {
+            height: 48px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .checkbox-grid input[type="checkbox"] {
+            cursor: pointer;
+        }
+        .checkbox-grid input[type="checkbox"]:disabled {
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
+    <button id="backButton" onclick="window.location.href='index.html'">
+        <img src="back button.svg" alt="Back">
+    </button>
     <div class="header">
         <img src="logo.png" alt="Logo">
     </div>
     <h1>Summer Camp 2024 Registration</h1>
     <div class="container">
-        <div class="form-group">
-            <input type="text" placeholder="Child's Name" required>
-            <input type="text" placeholder="Date of Birth" required>
-            <select required>
-                <option value="TK">TK</option>
-                <option value="KG">KG</option>
-                <option value="1st">1st</option>
-                <option value="2nd">2nd</option>
-                <option value="3rd">3rd</option>
-                <option value="4th">4th</option>
-                <option value="5th">5th</option>
-                <option value="6th">6th</option>
-            </select>
-        </div>
-        <!-- More form groups for parents' information, emergency contact, etc. -->
-        <div class="grid-container">
-            <div>
-                <input type="checkbox" id="week1-5full" name="week1" value="5full" onchange="checkWeek('week1')">
-                <label for="week1-5full">Week of June 3rd - 5 Day Full</label>
-                <input type="checkbox" id="week1-5half" name="week1" value="5half" onchange="checkWeek('week1')">
-                <label for="week1-5half">Week of June 3rd - 5 Day ½ AM/PM</label>
-                <!-- More checkboxes for other program options -->
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="childName">Child's Name</label>
+                <input type="text" id="childName" name="childName" required>
             </div>
-            <!-- More divs for other weeks -->
-        </div>
-        <div class="button-container">
-            <button onclick="validateForm()">Submit</button>
-        </div>
-        <div id="errorMessage" class="error-message"></div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="text" id="dob" name="dob" placeholder="MM/DD/YYYY" required>
+            </div>
+            <div class="form-group">
+                <label for="grade">Grade (Next School Year)</label>
+                <select id="grade" name="grade" required>
+                    <option value="TK">TK</option>
+                    <option value="KG">KG</option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
+                    <option value="5th">5th</option>
+                    <option value="6th">6th</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="parent1Name">Parent 1 Name</label>
+                <input type="text" id="parent1Name" name="parent1Name" required>
+            </div>
+            <div class="form-group">
+                <label for="parent1Phone">Parent 1 Phone</label>
+                <input type="text" id="parent1Phone" name="parent1Phone" required>
+            </div>
+            <div class="form-group">
+                <label for="parent1Email">Parent 1 Email</label>
+                <input type="email" id="parent1Email" name="parent1Email" required>
+            </div>
+            <div class="form-group">
+                <label for="parent2Name">Parent 2 Name</label>
+                <input type="text" id="parent2Name" name="parent2Name" required>
+            </div>
+            <div class="form-group">
+                <label for="parent2Phone">Parent 2 Phone</label>
+                <input type="text" id="parent2Phone" name="parent2Phone" required>
+            </div>
+            <div class="form-group">
+                <label for="parent2Email">Parent 2 Email</label>
+                <input type="email" id="parent2Email" name="parent2Email" required>
+            </div>
+            <div class="form-group">
+                <label for="streetAddress">Street Address</label>
+                <input type="text" id="streetAddress" name="streetAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="emergencyContactName">Emergency Contact Name</label>
+                <input type="text" id="emergencyContactName" name="emergencyContactName">
+            </div>
+            <div class="form-group">
+                <label for="emergencyContactPhone">Emergency Contact Phone</label>
+                <input type="text" id="emergencyContactPhone" name="emergencyContactPhone">
+            </div>
+            <div class="form-group" id="physicianInfo" style="display:none;">
+                <label for="physicianName">Physician Name</label>
+                <input type="text" id="physicianName" name="physicianName">
+            </div>
+            <div class="form-group" id="physicianInfoPhone" style="display:none;">
+                <label for="physicianPhone">Physician Phone</label>
+                <input type="text" id="physicianPhone" name="physicianPhone">
+            </div>
+            <div class="form-group">
+                <label for="allergies">Allergies/Special Notes/Dietary Restrictions</label>
+                <textarea id="allergies" name="allergies" rows="4"></textarea>
+            </div>
+            <div class="checkbox-grid">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Week</th>
+                            <th>5 Day Full</th>
+                            <th>5 Day 1/2 AM/PM</th>
+                            <th>4 Day Full</th>
+                            <th>4 Day 1/2 AM/PM</th>
+                            <th>3 Day Full</th>
+                            <th>3 Day 1/2 AM/PM</th>
+                            <th>2 Day Full</th>
+                            <th>2 Day 1/2 AM/PM</th>
+                            <th>1 Day Full</th>
+                            <th>1 Day 1/2 AM/PM</th>
+                            <th>Hourly</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Week of June 3rd</td>
+                            <td><input type="checkbox" name="week1" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week1" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week1" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week1" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week1" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week1" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week1" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week1" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week1" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week1" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week1" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of June 10th</td>
+                            <td><input type="checkbox" name="week2" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week2" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week2" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week2" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week2" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week2" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week2" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week2" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week2" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week2" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week2" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of June 17th</td>
+                            <td><input type="checkbox" name="week3" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week3" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week3" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week3" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week3" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week3" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week3" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week3" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week3" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week3" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week3" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of June 24th</td>
+                            <td><input type="checkbox" name="week4" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week4" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week4" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week4" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week4" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week4" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week4" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week4" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week4" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week4" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week4" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of July 1st</td>
+                            <td><input type="checkbox" name="week5" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week5" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week5" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week5" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week5" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week5" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week5" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week5" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week5" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week5" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week5" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of July 8th</td>
+                            <td><input type="checkbox" name="week6" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week6" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week6" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week6" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week6" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week6" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week6" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week6" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week6" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week6" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week6" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of July 15th</td>
+                            <td><input type="checkbox" name="week7" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week7" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week7" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week7" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week7" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week7" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week7" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week7" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week7" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week7" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week7" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of July 22nd</td>
+                            <td><input type="checkbox" name="week8" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week8" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week8" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week8" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week8" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week8" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week8" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week8" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week8" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week8" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week8" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of July 29th</td>
+                            <td><input type="checkbox" name="week9" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week9" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week9" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week9" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week9" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week9" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week9" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week9" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week9" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week9" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week9" value="Hourly"></td>
+                        </tr>
+                        <tr>
+                            <td>Week of August 5th</td>
+                            <td><input type="checkbox" name="week10" value="5DayFull"></td>
+                            <td><input type="checkbox" name="week10" value="5DayHalf"></td>
+                            <td><input type="checkbox" name="week10" value="4DayFull"></td>
+                            <td><input type="checkbox" name="week10" value="4DayHalf"></td>
+                            <td><input type="checkbox" name="week10" value="3DayFull"></td>
+                            <td><input type="checkbox" name="week10" value="3DayHalf"></td>
+                            <td><input type="checkbox" name="week10" value="2DayFull"></td>
+                            <td><input type="checkbox" name="week10" value="2DayHalf"></td>
+                            <td><input type="checkbox" name="week10" value="1DayFull"></td>
+                            <td><input type="checkbox" name="week10" value="1DayHalf"></td>
+                            <td><input type="checkbox" name="week10" value="Hourly"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
     </div>
+    
     <script>
-        function checkWeek(week) {
-            const checkboxes = document.querySelectorAll(`input[name="${week}"]`);
-            let selected = false;
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    selected = true;
-                }
-            });
-            checkboxes.forEach(checkbox => {
-                if (!checkbox.checked) {
-                    checkbox.disabled = selected;
-                } else {
-                    checkbox.disabled = false;
-                }
-            });
-        }
-
-        function validateForm() {
-            const checkboxes = document.querySelectorAll('.grid-container input[type="checkbox"]');
-            let valid = true;
-            checkboxes.forEach(checkbox => {
-                if (!checkbox.checked && checkbox.name !== "hourly") {
-                    valid = false;
-                }
-            });
-
-            if (!valid) {
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('errorMessage').innerText = 'Please select at least one option for each week.';
+        document.getElementById('grade').addEventListener('change', function() {
+            var grade = this.value;
+            if (grade === 'TK' || grade === 'KG') {
+                document.getElementById('physicianInfo').style.display = 'block';
+                document.getElementById('physicianInfoPhone').style.display = 'block';
             } else {
-                document.getElementById('errorMessage').style.display = 'none';
-                // Submit the form
+                document.getElementById('physicianInfo').style.display = 'none';
+                document.getElementById('physicianInfoPhone').style.display = 'none';
             }
-        }
+        });
+    
+        const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+    
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const name = event.target.name;
+                const checkboxesByName = document.querySelectorAll(`input[name="${name}"]`);
+    
+                if (event.target.checked) {
+                    checkboxesByName.forEach(cb => {
+                        if (cb !== event.target) {
+                            cb.disabled = true;
+                        }
+                    });
+                } else {
+                    checkboxesByName.forEach(cb => {
+                        cb.disabled = false;
+                    });
+                }
+            });
+        });
+    
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Add your form submission logic here
+            alert('Form submitted!');
+        });
     </script>
-</body>
-</html>
+    
