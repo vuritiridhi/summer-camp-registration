@@ -88,6 +88,28 @@
             pointer-events: none;
             color: black;
         }
+        .popup {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            width: 80%;
+            height: 60%;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            z-index: 1000;
+            display: none;
+            overflow: auto;
+        }
+        .popup .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -112,17 +134,37 @@
         </div>
     </div>
     <a href="admin-login.html" class="admin-link" style="margin-bottom: 20px;">Admin</a>
+
+    <!-- Pop-up for TK and KG -->
+    <div id="popupTkKg" class="popup">
+        <span class="close" onclick="closePopup('popupTkKg')">&times;</span>
+        <img src="SC Y.pdf" alt="TK and KG Schedule" style="width: 100%; height: auto;">
+    </div>
+
+    <!-- Pop-up for 1st Grade and Up -->
+    <div id="popup1stUp" class="popup">
+        <span class="close" onclick="closePopup('popup1stUp')">&times;</span>
+        <img src="SC O.pdf" alt="1st Grade and Up Schedule" style="width: 100%; height: auto;">
+    </div>
+
     <script>
         document.getElementById('scheduleDropdown').addEventListener('change', function() {
             var value = this.value;
-            var content = document.getElementById('content');
             if (value === 'tk-kg') {
-                content.innerHTML = '<img src="SC Y.pdf" alt="TK and KG Schedule" style="max-width: 100%; height: auto;">';
+                openPopup('popupTkKg');
             } else if (value === '1st-up') {
-                content.innerHTML = '<img src="SC O.pdf" alt="1st Grade and Up Schedule" style="max-width: 100%; height: auto;">';
+                openPopup('popup1stUp');
             }
             this.selectedIndex = 0; // Reset the dropdown
         });
+
+        function openPopup(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function closePopup(id) {
+            document.getElementById(id).style.display = 'none';
+        }
     </script>
 </body>
 </html>
