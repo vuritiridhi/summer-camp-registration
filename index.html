@@ -61,11 +61,19 @@
             text-align: right;
             margin-top: 20px;
         }
+        select {
+            font-size: 0.8em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background-color: #ffd700;
+            color: white;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <div style="position: absolute; top: 20px; right: 20px;">
-        <select id="scheduleDropdown" name="scheduleDropdown" style="font-size: 0.8em; padding: 5px; border-radius: 4px;">
+        <select id="scheduleDropdown" name="scheduleDropdown">
             <option disabled selected>View Our Schedules</option>
             <option value="tk-kg">TK and KG</option>
             <option value="1st-up">1st Grade and Up</option>
@@ -85,5 +93,16 @@
         </div>
     </div>
     <a href="admin.html" class="admin-link">Admin</a>
+    <script>
+        document.getElementById('scheduleDropdown').addEventListener('change', function() {
+            var value = this.value;
+            if (value === 'tk-kg') {
+                window.open('SC Y.pdf', '_blank', 'width=600,height=800');
+            } else if (value === '1st-up') {
+                window.open('SC O.pdf', '_blank', 'width=600,height=800');
+            }
+            this.selectedIndex = 0; // Reset the dropdown
+        });
+    </script>
 </body>
 </html>
