@@ -281,8 +281,24 @@
             overlay.style.display = 'none';
             const popup = document.getElementById('daySelectionPopup');
             popup.style.display = 'none';
-        }
 
+            const week = popup.dataset.week;
+            const programType = popup.dataset.programType;
+
+            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
+            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+
+            // Store the selected values in a hidden input or some other data structure
+            // Here we could store it in a data attribute or some other form
+
+            // Reset the selections
+            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
+            document.getElementById('startTime').value = "8:30am";
+            document.getElementById('endTime').value = "8:30am";
+        }
         function cancelDaySelection() {
             const overlay = document.getElementById('overlay');
             const popup = document.getElementById('daySelectionPopup');
@@ -322,7 +338,6 @@
                     }
                 });
             });
-
             document.getElementById('grade').addEventListener('change', checkGrade);
             checkGrade(); // Initial check on page load
         });
