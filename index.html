@@ -61,19 +61,38 @@
             text-align: right;
             margin-top: 20px;
         }
-        select {
+        .dropdown-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .custom-dropdown {
+            appearance: none;
             font-size: 0.8em;
-            padding: 5px 10px;
+            padding: 10px 20px;
             border-radius: 4px;
             background-color: #ffd700;
-            color: white;
+            color: black;
             border: none;
+            cursor: pointer;
+            position: relative;
+            text-align: left;
+        }
+        .custom-dropdown::after {
+            content: '▼';
+            font-size: 0.8em;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: black;
         }
     </style>
 </head>
 <body>
-    <div style="position: absolute; top: 20px; right: 20px;">
-        <select id="scheduleDropdown" name="scheduleDropdown">
+    <div class="dropdown-container">
+        <select id="scheduleDropdown" name="scheduleDropdown" class="custom-dropdown">
             <option disabled selected>View Our Schedules</option>
             <option value="tk-kg">TK and KG</option>
             <option value="1st-up">1st Grade and Up</option>
@@ -83,7 +102,7 @@
         <img src="logo.png" alt="Logo">
     </div>
     <h1>Welcome to<br><span>Summer Camp 2024</span></h1>
-    <div class="container">
+    <div class="container" id="content">
         <div class="button-container">
             <button onclick="window.location.href='new-registration.html'">New Registration</button>
             <button onclick="window.location.href='edit-registration.html'">Make Changes to an Existing Registration</button>
@@ -92,14 +111,15 @@
             <img src="SC Flyer.pdf" alt="Summer Camp Flyer">
         </div>
     </div>
-    <a href="admin.html" class="admin-link">Admin</a>
+    <a href="admin.html" class="admin-link" style="margin-bottom: 20px;">Admin</a>
     <script>
         document.getElementById('scheduleDropdown').addEventListener('change', function() {
             var value = this.value;
+            var content = document.getElementById('content');
             if (value === 'tk-kg') {
-                window.open('SC Y.pdf', '_blank', 'width=600,height=800');
+                content.innerHTML = '<img src="SC Y.pdf" alt="TK and KG Schedule" style="max-width: 100%; height: auto;">';
             } else if (value === '1st-up') {
-                window.open('SC O.pdf', '_blank', 'width=600,height=800');
+                content.innerHTML = '<img src="SC O.pdf" alt="1st Grade and Up Schedule" style="max-width: 100%; height: auto;">';
             }
             this.selectedIndex = 0; // Reset the dropdown
         });
