@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summer Camp 2024 Registration</title>
     <style>
-        /* Add your CSS styles here */
         .popup {
             display: none;
             position: fixed;
@@ -23,6 +22,7 @@
         .error-message {
             color: red;
         }
+        /* Your additional CSS styles here */
     </style>
 </head>
 <body>
@@ -33,6 +33,7 @@
     <img src="logo.png" alt="Logo" style="display: block; margin: 0 auto; width: 100px;">
     <div style="color: blue; text-align: left;">** All Extra-Curricular Activities Included at no additional charge</div>
     <form>
+        <!-- Registration fields -->
         <label for="childName">Child's Name <span style="color: red;">*</span></label>
         <input type="text" id="childName" name="childName" required>
         <label for="dob">Date of Birth <span style="color: red;">*</span></label>
@@ -99,17 +100,17 @@
                 <!-- Repeat for each week -->
                 <tr>
                     <td>Week of June 3rd</td>
-                    <td><input type="checkbox" name="weeks[week1]" value="5 Day Full"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="5 Day ½ AM/PM"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="4 Day Full"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="4 Day ½ AM/PM"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="3 Day Full"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="3 Day ½ AM/PM"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="2 Day Full"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="2 Day ½ AM/PM"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="1 Day Full"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="1 Day ½ AM/PM"></td>
-                    <td><input type="checkbox" name="weeks[week1]" value="Hourly"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="5 Day Full" onclick="showDaySelection('5 Day Full', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="5 Day ½ AM/PM" onclick="showDaySelection('5 Day ½ AM/PM', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="4 Day Full" onclick="showDaySelection('4 Day Full', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="4 Day ½ AM/PM" onclick="showDaySelection('4 Day ½ AM/PM', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="3 Day Full" onclick="showDaySelection('3 Day Full', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="3 Day ½ AM/PM" onclick="showDaySelection('3 Day ½ AM/PM', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="2 Day Full" onclick="showDaySelection('2 Day Full', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="2 Day ½ AM/PM" onclick="showDaySelection('2 Day ½ AM/PM', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="1 Day Full" onclick="showDaySelection('1 Day Full', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="1 Day ½ AM/PM" onclick="showDaySelection('1 Day ½ AM/PM', 'Week of June 3rd')"></td>
+                    <td><input type="checkbox" name="weeks[week1]" value="Hourly" onclick="showDaySelection('Hourly', 'Week of June 3rd')"></td>
                 </tr>
                 <!-- Repeat similar rows for each week -->
             </tbody>
