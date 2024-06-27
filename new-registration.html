@@ -302,7 +302,7 @@
                 checkbox.addEventListener('change', () => {
                     const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
                     checkboxes.forEach(cb => {
-                        cb.disabled = !cb.checked && checkedCount >= maxDays;
+                        cb.disabled = !cb.checked && checkedCount >= popup.dataset.maxDays;
                     });
                 });
             });
