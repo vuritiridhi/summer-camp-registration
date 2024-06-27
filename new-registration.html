@@ -314,11 +314,14 @@
         function saveDaySelection() {
             const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked'));
             const maxDays = document.getElementById('daySelectionPopup').dataset.maxDays;
+            const programType = document.getElementById('daySelectionPopup').dataset.programType;
             const errorMessage = document.getElementById('daySelectionError');
 
-            if (selectedDays.length < maxDays) {
+            if (programType !== '5 Day ½ AM/PM' && selectedDays.length < maxDays) {
                 errorMessage.innerText = `Please choose ${maxDays} days.`;
                 errorMessage.style.color = 'red';
+                errorMessage.style.fontSize = '0.8em';
+                errorMessage.style.marginBottom = '10px';
                 errorMessage.style.display = 'block';
                 return; // Prevent the popup from closing
             } else {
@@ -331,7 +334,6 @@
             popup.style.display = 'none';
 
             const week = popup.dataset.week;
-            const programType = popup.dataset.programType;
 
             const selectedDaysValues = selectedDays.map(cb => cb.value);
             const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
@@ -689,7 +691,7 @@
 
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
-        <div id="daySelectionError" style="display: none;"></div> <!-- Error message -->
+        <div id="daySelectionError" style="display: none; margin-bottom: 10px;"></div> <!-- Error message -->
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing">
