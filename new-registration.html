@@ -398,6 +398,10 @@
 
             const isHourly = popup.dataset.programType.includes('Hourly');
 
+            // Hide error messages before validating
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('amPmErrorMessage').style.display = 'none';
+
             if (!isHourly) {
                 if (selectedDays.length < maxDays && !popup.dataset.programType.includes('5 Day ½ AM/PM')) {
                     document.getElementById('errorMessage').innerText = `Please choose ${maxDays} days.`;
@@ -411,10 +415,6 @@
                     return;
                 }
             }
-
-            // Hide error messages
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('amPmErrorMessage').style.display = 'none';
 
             overlay.style.display = 'none';
             popup.style.display = 'none';
