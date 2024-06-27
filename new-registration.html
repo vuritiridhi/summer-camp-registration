@@ -250,13 +250,28 @@
             const isHourly = programType.includes('Hourly');
             document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
 
-            const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') || programType.includes('Hourly') ? 1 : 5;
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
                 input.checked = false;
             });
             document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
-            document.querySelectorAll(`#daySelection input[name="popupDays"]:nth-child(n+${maxDays + 1})`).forEach(input => input.disabled = true);
+
+            if (isHourly) {
+                document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
+                    input.addEventListener('change', (event) => {
+                        const day = event.target.value;
+                        const timingDiv = document.getElementById(`timing${day}`);
+                        if (event.target.checked) {
+                            timingDiv.classList.remove('hidden');
+                        } else {
+                            timingDiv.classList.add('hidden');
+                        }
+                    });
+                });
+            } else {
+                const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') || programType.includes('Hourly') ? 1 : 5;
+                document.querySelectorAll(`#daySelection input[name="popupDays"]:nth-child(n+${maxDays + 1})`).forEach(input => input.disabled = true);
+            }
 
             popup.dataset.programType = programType;
             popup.dataset.week = week;
@@ -264,7 +279,6 @@
             overlay.style.display = 'block';
             popup.style.display = 'block';
 
-            // Disable excess checkboxes if max selected
             const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', () => {
@@ -275,7 +289,6 @@
                 });
             });
         }
-
         function saveDaySelection() {
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
@@ -626,12 +639,38 @@
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
         <div id="daySelection">
-            <label><input type="checkbox" name="popupDays" value="Monday"> Monday</label><br>
-            <label><input type="checkbox" name="popupDays" value="Tuesday"> Tuesday</label><br>
-            <label><input type="checkbox" name="popupDays" value="Wednesday"> Wednesday</label><br>
-            <label><input type="checkbox" name="popupDays" value="Thursday"> Thursday</label><br>
-            <label><input type="checkbox" name="popupDays" value="Friday"> Friday</label><br>
-        </div>
+            <label><input type="checkbox" name="popupDays" value="Monday"> Monday</label>
+            <div id="timingMonday" class="hidden">
+                <label for="startTimeMonday">Start Time:</label>
+                <select id="startTimeMonday" name="startTimeMonday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <label for="endTimeMonday">End Time:</label>
+                <select id="endTimeMonday" name="endTimeMonday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <label><input type="checkbox" name="popupDays" value="Tuesday"> Tuesday</label>
+            <div id="timingTuesday" class="hidden">
+                <label for="startTimeTuesday">Start Time:</label>
+                <select id="startTimeTuesday" name="startTimeTuesday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <label for="endTimeTuesday">End Time:</label>
+                <select id="endTimeTuesday" name="endTimeTuesday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <!-- Repeat similar blocks for Wednesday, Thursday, Friday -->
+        </div>        
         <br>
         <div id="amPmSelection" class="hidden">
             <label><input type="radio" name="popupAmPm" value="AM"> AM Session</label><br>
