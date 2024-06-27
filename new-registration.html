@@ -69,6 +69,14 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+        .timing label, .timing select {
+            font-size: 0.9em; /* Make the text size smaller */
+            margin-right: 5px; /* Add some space between labels and selects */
+        }
+        .timing {
+            display: flex; /* Align items in a line */
+            align-items: center;
+        }
         .overlay {
             display: none;
             position: fixed;
@@ -280,6 +288,7 @@
             } else {
                 const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
                 document.querySelectorAll(`#daySelection input[name="popupDays"]:nth-child(n+${maxDays + 1})`).forEach(input => input.disabled = true);
+                popup.dataset.maxDays = maxDays;
             }
 
             popup.dataset.programType = programType;
@@ -303,6 +312,19 @@
         }
 
         function saveDaySelection() {
+            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked'));
+            const maxDays = document.getElementById('daySelectionPopup').dataset.maxDays;
+            const errorMessage = document.getElementById('daySelectionError');
+
+            if (selectedDays.length < maxDays) {
+                errorMessage.innerText = `Please choose ${maxDays} days.`;
+                errorMessage.style.color = 'red';
+                errorMessage.style.display = 'block';
+                return; // Prevent the popup from closing
+            } else {
+                errorMessage.style.display = 'none';
+            }
+
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
             const popup = document.getElementById('daySelectionPopup');
@@ -311,15 +333,8 @@
             const week = popup.dataset.week;
             const programType = popup.dataset.programType;
 
-            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
+            const selectedDaysValues = selectedDays.map(cb => cb.value);
             const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
-
-            // Only collect timing data for the hourly program
-            const timings = selectedDays.map(day => ({
-                day,
-                startTime: programType.includes('Hourly') ? document.getElementById(`startTime${day}`).value : null,
-                endTime: programType.includes('Hourly') ? document.getElementById(`endTime${day}`).value : null
-            }));
 
             // Store the selected values in a hidden input or some other data structure
             // Here we could store it in a data attribute or some other form
@@ -344,9 +359,8 @@
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
 
-            // Uncheck the checkboxes in the popup if cancel is clicked
-            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
+            // Uncheck the corresponding checkbox if cancel is clicked
+            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = false;
         }
 
         function checkGrade() {
@@ -675,6 +689,7 @@
 
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
+        <div id="daySelectionError" style="display: none;"></div> <!-- Error message -->
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing">
@@ -682,11 +697,13 @@
                 <select id="startTimeMonday" name="startTimeMonday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeMonday">End Time:</label>
                 <select id="endTimeMonday" name="endTimeMonday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -696,11 +713,13 @@
                 <select id="startTimeTuesday" name="startTimeTuesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeTuesday">End Time:</label>
                 <select id="endTimeTuesday" name="endTimeTuesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -710,11 +729,13 @@
                 <select id="startTimeWednesday" name="startTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeWednesday">End Time:</label>
                 <select id="endTimeWednesday" name="endTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -724,11 +745,13 @@
                 <select id="startTimeThursday" name="startTimeThursday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeThursday">End Time:</label>
                 <select id="endTimeThursday" name="endTimeThursday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -738,11 +761,13 @@
                 <select id="startTimeFriday" name="startTimeFriday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeFriday">End Time:</label>
                 <select id="endTimeFriday" name="endTimeFriday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
         </div>
@@ -801,8 +826,8 @@
                 <option value="6:00pm">6:00pm</option>
             </select>
         </div>
-        <button type="button" onclick="saveDaySelection()">Save</button>
-        <button type="button" onclick="cancelDaySelection()">Cancel</button>
-    </div>
+        <button onclick="saveDaySelection()">Save</button>
+        <button onclick="cancelDaySelection()">Cancel</button>
+    </div>    
 </body>
 </html>
