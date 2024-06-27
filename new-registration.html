@@ -255,6 +255,23 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input[name^="weeks"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    const [week, programType] = event.target.value.split(' - ');
+                    if (event.target.checked) {
+                        document.querySelectorAll(`input[name^="weeks"][value^="${week}"]`).forEach(cb => {
+                            if (cb !== event.target) cb.disabled = true;
+                        });
+                        if (programType.includes('4 Day') || programType.includes('3 Day') || programType.includes('2 Day') || programType.includes('1 Day') || programType.includes('Hourly') || programType.includes('5 Day ½ AM/PM')) {
+                            showDaySelection(programType, week);
+                        }
+                    } else {
+                        document.querySelectorAll(`input[name^="weeks"][value^="${week}"]`).forEach(cb => {
+                            cb.disabled = false;
+                        });
+                    }
+                });
+            });
             document.getElementById('grade').addEventListener('change', checkGrade);
             checkGrade(); // Initial check on page load
         });
