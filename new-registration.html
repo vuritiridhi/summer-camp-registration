@@ -306,7 +306,7 @@
                 input.checked = false;
                 const timingDiv = document.getElementById(`timing${input.value}`);
                 timingDiv.innerHTML = '';
-                
+
                 if (isHourly) {
                     input.addEventListener('change', (event) => {
                         const day = event.target.value;
@@ -370,22 +370,20 @@
                 }
             });
 
-            popup.dataset.programType = programType;
-            popup.dataset.week = week;
-
             overlay.style.display = 'block';
             popup.style.display = 'block';
-
-            const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
-                    checkboxes.forEach(cb => {
-                        cb.disabled = !cb.checked && checkedCount >= maxDays;
+        
+            if (!isHourly) {
+                const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
+                        checkboxes.forEach(cb => {
+                            cb.disabled = !cb.checked && checkedCount >= maxDays;
+                        });
                     });
                 });
-            });
-
+            }
             // Store the initial state
             popup.dataset.initialChecked = document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked;
         }
@@ -397,16 +395,20 @@
             const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
             const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
 
-            if (selectedDays.length < maxDays && !popup.dataset.programType.includes('5 Day ½ AM/PM') && !popup.dataset.programType.includes('Hourly')) {
-                document.getElementById('errorMessage').innerText = `Please choose ${maxDays} days.`;
-                document.getElementById('errorMessage').style.display = 'block';
-                return;
-            }
+            const isHourly = popup.dataset.programType.includes('Hourly');
 
-            if (selectedAmPm.length === 0 && popup.dataset.programType.includes('½ AM/PM')) {
-                document.getElementById('amPmErrorMessage').innerText = `Please select AM or PM.`;
-                document.getElementById('amPmErrorMessage').style.display = 'block';
-                return;
+            if (!isHourly) {
+                if (selectedDays.length < maxDays && !popup.dataset.programType.includes('5 Day ½ AM/PM')) {
+                    document.getElementById('errorMessage').innerText = `Please choose ${maxDays} days.`;
+                    document.getElementById('errorMessage').style.display = 'block';
+                    return;
+                }
+
+                if (selectedAmPm.length === 0 && popup.dataset.programType.includes('½ AM/PM')) {
+                    document.getElementById('amPmErrorMessage').innerText = `Please select AM or PM.`;
+                    document.getElementById('amPmErrorMessage').style.display = 'block';
+                    return;
+                }
             }
 
             // Hide error messages if criteria are met
