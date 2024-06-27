@@ -289,39 +289,74 @@
                 <label><input type="radio" name="popupAmPm" value="AM"> AM (8:30am - 1:00pm)</label><br>
                 <label><input type="radio" name="popupAmPm" value="PM"> PM (1:00pm - 6:00pm)</label><br>`;
 
-            const isHourly = programType.includes('Hourly');
-            document.querySelectorAll('.timing').forEach(div => {
-                if (isHourly) {
-                    div.classList.remove('hidden');
-                } else {
-                    div.classList.add('hidden');
-                }
-            });
-
-            // Show/hide day selection based on the program type
-            document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
-
-            document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
+                const isHourly = programType.includes('Hourly');
+            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
 
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
                 input.checked = false;
-            });
-
-            if (!isHourly) {
-                const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
-                popup.dataset.maxDays = maxDays; // Store the maxDays value in the popup dataset
-
-                const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
-                checkboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', () => {
-                        const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
-                        checkboxes.forEach(cb => {
-                            cb.disabled = !cb.checked && checkedCount >= maxDays;
-                        });
+                input.nextElementSibling?.remove(); // Remove any existing timing dropdowns
+                if (isHourly) {
+                    input.addEventListener('change', (event) => {
+                        const day = event.target.value;
+                        const timingDiv = document.getElementById(`timing${day}`);
+                        if (event.target.checked) {
+                            const startTimeSelect = document.createElement('select');
+                            startTimeSelect.name = `startTime${day}`;
+                            startTimeSelect.innerHTML = `
+                                <option value="8:30am">8:30am</option>
+                                <option value="9:00am">9:00am</option>
+                                <option value="9:30am">9:30am</option>
+                                <option value="10:00am">10:00am</option>
+                                <option value="10:30am">10:30am</option>
+                                <option value="11:00am">11:00am</option>
+                                <option value="11:30am">11:30am</option>
+                                <option value="12:00pm">12:00pm</option>
+                                <option value="12:30pm">12:30pm</option>
+                                <option value="1:00pm">1:00pm</option>
+                                <option value="1:30pm">1:30pm</option>
+                                <option value="2:00pm">2:00pm</option>
+                                <option value="2:30pm">2:30pm</option>
+                                <option value="3:00pm">3:00pm</option>
+                                <option value="3:30pm">3:30pm</option>
+                                <option value="4:00pm">4:00pm</option>
+                                <option value="4:30pm">4:30pm</option>
+                                <option value="5:00pm">5:00pm</option>
+                                <option value="5:30pm">5:30pm</option>
+                                <option value="6:00pm">6:00pm</option>`;
+                            const endTimeSelect = document.createElement('select');
+                            endTimeSelect.name = `endTime${day}`;
+                            endTimeSelect.innerHTML = `
+                                <option value="8:30am">8:30am</option>
+                                <option value="9:00am">9:00am</option>
+                                <option value="9:30am">9:30am</option>
+                                <option value="10:00am">10:00am</option>
+                                <option value="10:30am">10:30am</option>
+                                <option value="11:00am">11:00am</option>
+                                <option value="11:30am">11:30am</option>
+                                <option value="12:00pm">12:00pm</option>
+                                <option value="12:30pm">12:30pm</option>
+                                <option value="1:00pm">1:00pm</option>
+                                <option value="1:30pm">1:30pm</option>
+                                <option value="2:00pm">2:00pm</option>
+                                <option value="2:30pm">2:30pm</option>
+                                <option value="3:00pm">3:00pm</option>
+                                <option value="3:30pm">3:30pm</option>
+                                <option value="4:00pm">4:00pm</option>
+                                <option value="4:30pm">4:30pm</option>
+                                <option value="5:00pm">5:00pm</option>
+                                <option value="5:30pm">5:30pm</option>
+                                <option value="6:00pm">6:00pm</option>`;
+                            timingDiv.appendChild(startTimeSelect);
+                            timingDiv.appendChild(endTimeSelect);
+                            timingDiv.classList.remove('hidden');
+                        } else {
+                            timingDiv.classList.add('hidden');
+                            timingDiv.innerHTML = '';
+                        }
                     });
-                });
-            }
+                }
+            });
 
             popup.dataset.programType = programType;
             popup.dataset.week = week;
