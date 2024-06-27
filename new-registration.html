@@ -361,8 +361,8 @@
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
 
-            // Uncheck the corresponding checkbox if cancel is clicked
-            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = false;
+            // Hide the error message
+            document.getElementById('daySelectionError').style.display = 'none';
         }
 
         function checkGrade() {
