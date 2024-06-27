@@ -276,6 +276,8 @@
                 }
             });
 
+            document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
+
             // Show/hide day selection based on the program type
             document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
 
@@ -314,6 +316,7 @@
             const popup = document.getElementById('daySelectionPopup');
             const maxDays = popup.dataset.maxDays;
             const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
+            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
 
             if (selectedDays.length < maxDays && !popup.dataset.programType.includes('5 Day ½ AM/PM') && !popup.dataset.programType.includes('Hourly')) {
                 document.getElementById('errorMessage').innerText = `Please choose ${maxDays} days.`;
@@ -321,7 +324,14 @@
                 return;
             }
 
+            if (selectedAmPm.length === 0 && popup.dataset.programType.includes('½ AM/PM')) {
+                document.getElementById('amPmErrorMessage').innerText = `Please select AM or PM.`;
+                document.getElementById('amPmErrorMessage').style.display = 'block';
+                return;
+            }
+
             document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('amPmErrorMessage').style.display = 'none';
 
             overlay.style.display = 'none';
             popup.style.display = 'none';
@@ -345,6 +355,10 @@
 
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+
+            // Hide error messages
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('amPmErrorMessage').style.display = 'none';
         }
 
         function checkGrade() {
@@ -674,6 +688,7 @@
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
         <div id="errorMessage" style="color: red; display: none; font-size: 0.9em; margin-bottom: 10px;"></div>
+        <div id="amPmErrorMessage" style="color: red; display: none; font-size: 0.9em; margin-bottom: 10px;"></div>
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing"></div>
