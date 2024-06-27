@@ -366,14 +366,14 @@
                         }
                     });
                 } else {
-                    input.removeEventListener('change',() => {});
+                    input.removeEventListener('change', () => {});
                 }
             });
 
             overlay.style.display = 'block';
             popup.style.display = 'block';
-        
-            if (!isHourly) {
+
+            if (!isHourly) { // Skip this block if isHourly is true
                 const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
                 checkboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
@@ -384,6 +384,7 @@
                     });
                 });
             }
+
             // Store the initial state
             popup.dataset.initialChecked = document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked;
         }
