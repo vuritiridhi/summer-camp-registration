@@ -304,11 +304,12 @@
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
                 input.checked = false;
-                input.nextElementSibling?.remove(); // Remove any existing timing dropdowns
+                const timingDiv = document.getElementById(`timing${input.value}`);
+                timingDiv.innerHTML = '';
+                
                 if (isHourly) {
                     input.addEventListener('change', (event) => {
                         const day = event.target.value;
-                        const timingDiv = document.getElementById(`timing${day}`);
                         if (event.target.checked) {
                             const startTimeSelect = document.createElement('select');
                             startTimeSelect.name = `startTime${day}`;
@@ -364,6 +365,8 @@
                             timingDiv.innerHTML = '';
                         }
                     });
+                } else {
+                    input.removeEventListener('change',() => {});
                 }
             });
 
@@ -406,8 +409,14 @@
                 return;
             }
 
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('amPmErrorMessage').style.display = 'none';
+            // Hide error messages if criteria are met
+            if (selectedDays.length === maxDays) {
+                document.getElementById('errorMessage').style.display = 'none';
+            }
+
+            if (selectedAmPm.length > 0 || !popup.dataset.programType.includes('½ AM/PM')) {
+                document.getElementById('amPmErrorMessage').style.display = 'none';
+            }
 
             overlay.style.display = 'none';
             popup.style.display = 'none';
