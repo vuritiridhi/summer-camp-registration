@@ -236,6 +236,14 @@
 
             return cost;
         }
+        function toggleTiming(checkbox, day) {
+            const timingDiv = document.getElementById(`timing${day}`);
+            if (checkbox.checked) {
+                timingDiv.classList.remove('hidden');
+            } else {
+                timingDiv.classList.add('hidden');
+            }
+        }
 
         function showDaySelection(programType, week) {
             const overlay = document.getElementById('overlay');
@@ -288,6 +296,9 @@
                     });
                 });
             });
+
+            // Store the initial state
+            popup.dataset.initialChecked = document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked;
         }
         function saveDaySelection() {
             const overlay = document.getElementById('overlay');
@@ -318,9 +329,10 @@
             overlay.style.display = 'none';
             popup.style.display = 'none';
 
-            // Uncheck the corresponding checkbox
+            // Restore the initial state
             const week = popup.dataset.week;
-            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = false;
+            const initialChecked = popup.dataset.initialChecked === 'true';
+            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = initialChecked;
         }
         function checkGrade() {
             const grade = document.getElementById('grade').value;
@@ -639,8 +651,8 @@
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
         <div id="daySelection">
-            <label><input type="checkbox" name="popupDays" value="Monday"> Monday</label>
-            <div id="timingMonday" class="hidden">
+            <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
+            <div id="timingMonday" class="hidden timing">
                 <label for="startTimeMonday">Start Time:</label>
                 <select id="startTimeMonday" name="startTimeMonday">
                     <option value="8:30am">8:30am</option>
@@ -654,6 +666,24 @@
                     <!-- Add more options as needed -->
                 </select>
             </div>
+            <label><input type="checkbox" name="popupDays" value="Tuesday" onchange="toggleTiming(this, 'Tuesday')"> Tuesday</label>
+            <div id="timingTuesday" class="hidden timing">
+                <label for="startTimeTuesday">Start Time:</label>
+                <select id="startTimeTuesday" name="startTimeTuesday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <label for="endTimeTuesday">End Time:</label>
+                <select id="endTimeTuesday" name="endTimeTuesday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <!-- Repeat similar blocks for Wednesday, Thursday, Friday -->
+        </div>
+
             <label><input type="checkbox" name="popupDays" value="Tuesday"> Tuesday</label>
             <div id="timingTuesday" class="hidden">
                 <label for="startTimeTuesday">Start Time:</label>
