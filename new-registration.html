@@ -276,10 +276,10 @@
                 }
             });
 
-            document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
-
             // Show/hide day selection based on the program type
             document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
+
+            document.getElementById('hourlySelection').classList.toggle('hidden', !isHourly);
 
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
