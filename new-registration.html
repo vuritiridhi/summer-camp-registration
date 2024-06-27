@@ -772,15 +772,13 @@
             <label><input type="checkbox" name="popupDays" value="Friday" onchange="toggleTiming(this, 'Friday')"> Friday</label>
             <div id="timingFriday" class="hidden timing"></div>
         </div>
-        <br> <!-- Add this line to create space between day selection and AM/PM selection -->
-        <div id="amPmSelection" class="hidden">
-            <label><input type="radio" name="popupAmPm" value="AM"> AM (8:30am - 1:00pm)</label>
-            <br>
-            <label><input type="radio" name="popupAmPm" value="PM"> PM (1:00pm - 6:00pm)</label>
+        <div id="amPmSelection" class="hidden" style="margin-top: 20px;">
+            <label><input type="radio" name="popupAmPm" value="AM"> AM (8:30am - 1:00pm)</label><br>
+            <label><input type="radio" name="popupAmPm" value="PM"> PM (1:00pm - 6:00pm)</label><br>
         </div>
         <br>
         <button type="button" onclick="saveDaySelection()">Save</button>
         <button type="button" onclick="cancelDaySelection()">Cancel</button>
-    </div>          
+    </div>           
 </body>
 </html>
