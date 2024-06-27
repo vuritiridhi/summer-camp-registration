@@ -259,8 +259,9 @@
             const popup = document.getElementById('daySelectionPopup');
             const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
             const maxDays = popup.dataset.maxDays;
+            const programType = popup.dataset.programType;
 
-            if (selectedDays.length < maxDays) {
+            if (!programType.includes('5 Day ½ AM/PM') && selectedDays.length < maxDays) {
                 const errorMessage = document.getElementById('errorMessage');
                 errorMessage.innerText = `Please choose ${maxDays} days.`;
                 errorMessage.style.display = 'block';
@@ -270,7 +271,6 @@
             overlay.style.display = 'none';
             popup.style.display = 'none';
 
-            const programType = popup.dataset.programType;
             const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
 
             // Only collect timing data for the hourly program
