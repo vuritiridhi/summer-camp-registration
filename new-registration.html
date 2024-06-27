@@ -136,7 +136,7 @@
         }
         h2 {
             font-size: 1.5em;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
     </style>
     <script>
@@ -343,10 +343,6 @@
 
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-
-            // Uncheck the corresponding checkbox in the grid
-            const gridCheckbox = document.querySelector(`input[name^="weeks"][value^="${week}"]`);
-            gridCheckbox.checked = false;
         }
 
         function checkGrade() {
@@ -664,7 +660,7 @@
     <div id="overlay" class="overlay"></div>
 
     <div id="daySelectionPopup" class="popup">
-        <h2 id="popupTitle">Select Days</h2>
+        <h2 id="popupTitle" style="margin-bottom: 20px;">Select Days</h2>
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing">
@@ -751,7 +747,6 @@
             <label><input type="radio" name="popupAmPm" value="AM"> AM</label>
             <label><input type="radio" name="popupAmPm" value="PM"> PM</label>
         </div>
-        <br>
         <button onclick="saveDaySelection()">Save</button>
         <button onclick="cancelDaySelection()">Cancel</button>
     </div>
@@ -765,6 +760,46 @@
                 value = value.slice(0, 2) + '/' + value.slice(2);
             }
             input.value = value;
+        }
+
+        function saveDaySelection() {
+            const overlay = document.getElementById('overlay');
+            const popup = document.getElementById('daySelectionPopup');
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+
+            const week = popup.dataset.week;
+            const programType = popup.dataset.programType;
+
+            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
+            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
+
+            // Store the selected values in a hidden input or some other data structure
+            // Here we could store it in a data attribute or some other form
+
+            // Reset the selections
+            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
+            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+        }
+
+        function cancelDaySelection() {
+            const overlay = document.getElementById('overlay');
+            const popup = document.getElementById('daySelectionPopup');
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+
+            // Restore the initial state
+            const week = popup.dataset.week;
+            const initialChecked = popup.dataset.initialChecked === 'true';
+            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = initialChecked;
+
+            // Hide all timing divs
+            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+
+            // Uncheck the checkboxes in the popup if cancel is clicked
+            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
         }
     </script>
 </body>
