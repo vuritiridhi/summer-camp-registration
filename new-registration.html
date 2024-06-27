@@ -324,39 +324,31 @@
         }
 
         function saveDaySelection() {
-            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked'));
-            const maxDays = document.getElementById('daySelectionPopup').dataset.maxDays;
-            const programType = document.getElementById('daySelectionPopup').dataset.programType;
-            const errorMessage = document.getElementById('daySelectionError');
-
-            if (programType !== '5 Day ½ AM/PM' && selectedDays.length < maxDays) {
-                errorMessage.innerText = `Please choose ${maxDays} days.`;
-                errorMessage.style.color = 'red';
-                errorMessage.style.fontSize = '0.8em';
-                errorMessage.style.marginBottom = '10px';
-                errorMessage.style.display = 'block';
-                return; // Prevent the popup from closing
-            } else {
-                errorMessage.style.display = 'none';
-            }
-
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
             const popup = document.getElementById('daySelectionPopup');
             popup.style.display = 'none';
 
             const week = popup.dataset.week;
+            const programType = popup.dataset.programType;
 
-            const selectedDaysValues = selectedDays.map(cb => cb.value);
+            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
             const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
 
-            // Store the selected values in a hidden input or some other data structure
-            // Here we could store it in a data attribute or some other form
+            // Only collect timing data for the hourly program
+            const timings = selectedDays.map(day => ({
+                day,
+                startTime: programType.includes('Hourly') ? document.getElementById(`startTime${day}`).value : null,
+                endTime: programType.includes('Hourly') ? document.getElementById(`endTime${day}`).value : null
+            }));
 
             // Reset the selections
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+
+            // Remove error message if it exists
+            document.getElementById('errorMessage').style.display = 'none';
         }
 
         function cancelDaySelection() {
@@ -373,8 +365,8 @@
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
 
-            // Hide the error message
-            document.getElementById('daySelectionError').style.display = 'none';
+            // Remove error message if it exists
+            document.getElementById('errorMessage').style.display = 'none';
         }
 
         function checkGrade() {
@@ -703,7 +695,7 @@
 
     <div id="daySelectionPopup" class="popup">
         <h2 id="popupTitle">Select Days</h2>
-        <div id="errorMessage" style="color:red; display: none; margin-bottom: 10px;"></div> <!-- Error message -->
+        <div id="errorMessage" style="color:red; display: none; font-size: 0.9em; margin-bottom: 10px;">Please choose the correct number of days.</div>
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing">
