@@ -262,6 +262,7 @@
                 input.disabled = false;
                 input.checked = false;
             });
+
             document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
 
             if (isHourly) {
@@ -300,6 +301,7 @@
             // Store the initial state
             popup.dataset.initialChecked = document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked;
         }
+
         function saveDaySelection() {
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
@@ -334,6 +336,7 @@
             const initialChecked = popup.dataset.initialChecked === 'true';
             document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = initialChecked;
         }
+
         function checkGrade() {
             const grade = document.getElementById('grade').value;
             const physicianFields = document.getElementById('physicianFields');
@@ -681,26 +684,54 @@
                     <!-- Add more options as needed -->
                 </select>
             </div>
-            <!-- Repeat similar blocks for Wednesday, Thursday, Friday -->
-        </div>
-
-            <label><input type="checkbox" name="popupDays" value="Tuesday"> Tuesday</label>
-            <div id="timingTuesday" class="hidden">
-                <label for="startTimeTuesday">Start Time:</label>
-                <select id="startTimeTuesday" name="startTimeTuesday">
+            <label><input type="checkbox" name="popupDays" value="Wednesday" onchange="toggleTiming(this, 'Wednesday')"> Wednesday</label>
+            <div id="timingWednesday" class="hidden timing">
+                <label for="startTimeWednesday">Start Time:</label>
+                <select id="startTimeWednesday" name="startTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
                     <!-- Add more options as needed -->
                 </select>
-                <label for="endTimeTuesday">End Time:</label>
-                <select id="endTimeTuesday" name="endTimeTuesday">
+                <label for="endTimeWednesday">End Time:</label>
+                <select id="endTimeWednesday" name="endTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
                     <!-- Add more options as needed -->
                 </select>
             </div>
-            <!-- Repeat similar blocks for Wednesday, Thursday, Friday -->
-        </div>        
+            <label><input type="checkbox" name="popupDays" value="Thursday" onchange="toggleTiming(this, 'Thursday')"> Thursday</label>
+            <div id="timingThursday" class="hidden timing">
+                <label for="startTimeThursday">Start Time:</label>
+                <select id="startTimeThursday" name="startTimeThursday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <label for="endTimeThursday">End Time:</label>
+                <select id="endTimeThursday" name="endTimeThursday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <label><input type="checkbox" name="popupDays" value="Friday" onchange="toggleTiming(this, 'Friday')"> Friday</label>
+            <div id="timingFriday" class="hidden timing">
+                <label for="startTimeFriday">Start Time:</label>
+                <select id="startTimeFriday" name="startTimeFriday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <label for="endTimeFriday">End Time:</label>
+                <select id="endTimeFriday" name="endTimeFriday">
+                    <option value="8:30am">8:30am</option>
+                    <option value="9:00am">9:00am</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+        </div>
+        <button onclick="saveDaySelection()">Save</button>
+        <button onclick="cancelDaySelection()">Cancel</button>        
         <br>
         <div id="amPmSelection" class="hidden">
             <label><input type="radio" name="popupAmPm" value="AM"> AM Session</label><br>
