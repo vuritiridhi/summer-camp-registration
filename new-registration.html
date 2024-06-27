@@ -304,8 +304,11 @@
             const popup = document.getElementById('daySelectionPopup');
             overlay.style.display = 'none';
             popup.style.display = 'none';
-        }
 
+            // Uncheck the corresponding checkbox
+            const week = popup.dataset.week;
+            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = false;
+        }
         function checkGrade() {
             const grade = document.getElementById('grade').value;
             const physicianFields = document.getElementById('physicianFields');
