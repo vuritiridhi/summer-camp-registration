@@ -411,14 +411,9 @@
                 }
             }
 
-            // Hide error messages if criteria are met
-            if (selectedDays.length === maxDays) {
-                document.getElementById('errorMessage').style.display = 'none';
-            }
-
-            if (selectedAmPm.length > 0 || !popup.dataset.programType.includes('½ AM/PM')) {
-                document.getElementById('amPmErrorMessage').style.display = 'none';
-            }
+            // Hide error messages
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('amPmErrorMessage').style.display = 'none';
 
             overlay.style.display = 'none';
             popup.style.display = 'none';
