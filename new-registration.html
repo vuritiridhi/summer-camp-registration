@@ -297,7 +297,6 @@
             const isHourly = programType.includes('Hourly');
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
 
-            // Show or hide day selection
             const daySelection = document.getElementById('daySelection');
             daySelection.classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
 
@@ -373,7 +372,7 @@
             overlay.style.display = 'block';
             popup.style.display = 'block';
 
-            if (!isHourly) { // Skip this block if isHourly is true
+            if (!isHourly) {
                 const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
                 checkboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
