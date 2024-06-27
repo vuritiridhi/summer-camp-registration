@@ -136,7 +136,7 @@
         }
         h2 {
             font-size: 1.5em;
-            margin-bottom: 0;
+            margin-bottom: 20px;
         }
     </style>
     <script>
@@ -343,6 +343,10 @@
 
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+
+            // Uncheck the checkboxes in the popup if cancel is clicked
+            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
         }
 
         function checkGrade() {
@@ -380,10 +384,20 @@
             document.getElementById('grade').addEventListener('change', checkGrade);
             checkGrade(); // Initial check on page load
         });
+
+        function formatDate(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 4) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
+            } else if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            input.value = value;
+        }
     </script>
 </head>
 <body>
-    <button id="backButton" onclick="window.location.href='index.html'" style="position: absolute; left: 20px; top: 20px; border: none; background: none;">
+    <button id="backButton" onclick="window.location.href='index.html'">
         <img src="back button.svg" alt="Back">
     </button>
     <div class="header">
@@ -660,7 +674,7 @@
     <div id="overlay" class="overlay"></div>
 
     <div id="daySelectionPopup" class="popup">
-        <h2 id="popupTitle" style="margin-bottom: 20px;">Select Days</h2>
+        <h2 id="popupTitle">Select Days</h2>
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing">
@@ -668,13 +682,11 @@
                 <select id="startTimeMonday" name="startTimeMonday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeMonday">End Time:</label>
                 <select id="endTimeMonday" name="endTimeMonday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -684,13 +696,11 @@
                 <select id="startTimeTuesday" name="startTimeTuesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeTuesday">End Time:</label>
                 <select id="endTimeTuesday" name="endTimeTuesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -700,13 +710,11 @@
                 <select id="startTimeWednesday" name="startTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeWednesday">End Time:</label>
                 <select id="endTimeWednesday" name="endTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -716,13 +724,11 @@
                 <select id="startTimeThursday" name="startTimeThursday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeThursday">End Time:</label>
                 <select id="endTimeThursday" name="endTimeThursday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -732,75 +738,71 @@
                 <select id="startTimeFriday" name="startTimeFriday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeFriday">End Time:</label>
                 <select id="endTimeFriday" name="endTimeFriday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
         </div>
         <br>
         <div id="amPmSelection" class="hidden">
-            <label><input type="radio" name="popupAmPm" value="AM"> AM</label>
-            <label><input type="radio" name="popupAmPm" value="PM"> PM</label>
+            <label><input type="radio" name="popupAmPm" value="AM"> AM Session</label><br>
+            <label><input type="radio" name="popupAmPm" value="PM"> PM Session</label><br>
         </div>
-        <button onclick="saveDaySelection()">Save</button>
-        <button onclick="cancelDaySelection()">Cancel</button>
+        <br>
+        <div id="hourlySelection" class="hidden">
+            <label for="startTime">Start Time:</label>
+            <select id="startTime" name="startTime">
+                <option value="8:30am">8:30am</option>
+                <option value="9:00am">9:00am</option>
+                <option value="9:30am">9:30am</option>
+                <option value="10:00am">10:00am</option>
+                <option value="10:30am">10:30am</option>
+                <option value="11:00am">11:00am</option>
+                <option value="11:30am">11:30am</option>
+                <option value="12:00pm">12:00pm</option>
+                <option value="12:30pm">12:30pm</option>
+                <option value="1:00pm">1:00pm</option>
+                <option value="1:30pm">1:30pm</option>
+                <option value="2:00pm">2:00pm</option>
+                <option value="2:30pm">2:30pm</option>
+                <option value="3:00pm">3:00pm</option>
+                <option value="3:30pm">3:30pm</option>
+                <option value="4:00pm">4:00pm</option>
+                <option value="4:30pm">4:30pm</option>
+                <option value="5:00pm">5:00pm</option>
+                <option value="5:30pm">5:30pm</option>
+                <option value="6:00pm">6:00pm</option>
+            </select>
+            <br>
+            <label for="endTime">End Time:</label>
+            <select id="endTime" name="endTime">
+                <option value="8:30am">8:30am</option>
+                <option value="9:00am">9:00am</option>
+                <option value="9:30am">9:30am</option>
+                <option value="10:00am">10:00am</option>
+                <option value="10:30am">10:30am</option>
+                <option value="11:00am">11:00am</option>
+                <option value="11:30am">11:30am</option>
+                <option value="12:00pm">12:00pm</option>
+                <option value="12:30pm">12:30pm</option>
+                <option value="1:00pm">1:00pm</option>
+                <option value="1:30pm">1:30pm</option>
+                <option value="2:00pm">2:00pm</option>
+                <option value="2:30pm">2:30pm</option>
+                <option value="3:00pm">3:00pm</option>
+                <option value="3:30pm">3:30pm</option>
+                <option value="4:00pm">4:00pm</option>
+                <option value="4:30pm">4:30pm</option>
+                <option value="5:00pm">5:00pm</option>
+                <option value="5:30pm">5:30pm</option>
+                <option value="6:00pm">6:00pm</option>
+            </select>
+        </div>
+        <button type="button" onclick="saveDaySelection()">Save</button>
+        <button type="button" onclick="cancelDaySelection()">Cancel</button>
     </div>
-
-    <script>
-        function formatDate(input) {
-            let value = input.value.replace(/\D/g, '');
-            if (value.length >= 4) {
-                value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
-            } else if (value.length >= 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2);
-            }
-            input.value = value;
-        }
-
-        function saveDaySelection() {
-            const overlay = document.getElementById('overlay');
-            const popup = document.getElementById('daySelectionPopup');
-            overlay.style.display = 'none';
-            popup.style.display = 'none';
-
-            const week = popup.dataset.week;
-            const programType = popup.dataset.programType;
-
-            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
-            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
-
-            // Store the selected values in a hidden input or some other data structure
-            // Here we could store it in a data attribute or some other form
-
-            // Reset the selections
-            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
-            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-        }
-
-        function cancelDaySelection() {
-            const overlay = document.getElementById('overlay');
-            const popup = document.getElementById('daySelectionPopup');
-            overlay.style.display = 'none';
-            popup.style.display = 'none';
-
-            // Restore the initial state
-            const week = popup.dataset.week;
-            const initialChecked = popup.dataset.initialChecked === 'true';
-            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = initialChecked;
-
-            // Hide all timing divs
-            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-
-            // Uncheck the checkboxes in the popup if cancel is clicked
-            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
-        }
-    </script>
 </body>
 </html>
