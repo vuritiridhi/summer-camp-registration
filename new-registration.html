@@ -254,41 +254,6 @@
             }
         }
 
-        function saveDaySelection() {
-            const overlay = document.getElementById('overlay');
-            const popup = document.getElementById('daySelectionPopup');
-            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
-            const maxDays = popup.dataset.maxDays;
-            const programType = popup.dataset.programType;
-
-            if (!programType.includes('5 Day ½ AM/PM') && selectedDays.length < maxDays) {
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.innerText = `Please choose ${maxDays} days.`;
-                errorMessage.style.display = 'block';
-                return; // Do not close the popup
-            }
-
-            overlay.style.display = 'none';
-            popup.style.display = 'none';
-
-            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
-
-            // Only collect timing data for the hourly program
-            const timings = selectedDays.map(day => ({
-                day,
-                startTime: programType.includes('Hourly') ? document.getElementById(`startTime${day}`).value : null,
-                endTime: programType.includes('Hourly') ? document.getElementById(`endTime${day}`).value : null
-            }));
-
-            // Reset the selections
-            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
-            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-
-            // Hide error message
-            document.getElementById('errorMessage').style.display = 'none';
-        }
-
         function showDaySelection(programType, week) {
             const overlay = document.getElementById('overlay');
             const popup = document.getElementById('daySelectionPopup');
@@ -298,6 +263,9 @@
 
             const isHalfDay = programType.includes('½ AM/PM');
             document.getElementById('amPmSelection').classList.toggle('hidden', !isHalfDay);
+            document.getElementById('amPmSelection').innerHTML = `
+                <label><input type="radio" name="popupAmPm" value="AM"> AM (8:30am - 1:00pm)</label><br>
+                <label><input type="radio" name="popupAmPm" value="PM"> PM (1:00pm - 6:00pm)</label><br>`;
 
             const isHourly = programType.includes('Hourly');
             document.querySelectorAll('.timing').forEach(div => {
@@ -305,47 +273,27 @@
                     div.classList.remove('hidden');
                 } else {
                     div.classList.add('hidden');
-                    div.innerHTML = ''; // Remove timing options for non-hourly programs
                 }
             });
+
+            // Remove timing options for non-hourly programs
+            if (!isHourly) {
+                document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
+            }
 
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
                 input.checked = false;
             });
 
-            document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
+            if (isHalfDay && !programType.includes('5 Day ½ AM/PM')) {
+                document.getElementById('amPmSelection').classList.remove('hidden');
+            }
 
-            const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
-            popup.dataset.maxDays = maxDays; // Store the maxDays value in the popup dataset
+            if (!isHourly) {
+                const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
+                popup.dataset.maxDays = maxDays; // Store the maxDays value in the popup dataset
 
-            if (isHourly) {
-                document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
-                    input.addEventListener('change', (event) => {
-                        const day = event.target.value;
-                        const timingDiv = document.getElementById(`timing${day}`);
-                        if (event.target.checked) {
-                            timingDiv.innerHTML = `
-                                <label for="startTime${day}">Start Time:</label>
-                                <select id="startTime${day}" name="startTime${day}">
-                                    <option value="8:30am">8:30am</option>
-                                    <option value="9:00am">9:00am</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                                <label for="endTime${day}">End Time:</label>
-                                <select id="endTime${day}" name="endTime${day}">
-                                    <option value="8:30am">8:30am</option>
-                                    <option value="9:00am">9:00am</option>
-                                    <!-- Add more options as needed -->
-                                </select>`;
-                            timingDiv.classList.remove('hidden');
-                        } else {
-                            timingDiv.innerHTML = '';
-                            timingDiv.classList.add('hidden');
-                        }
-                    });
-                });
-            } else {
                 const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
                 checkboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
@@ -369,46 +317,26 @@
 
         function saveDaySelection() {
             const overlay = document.getElementById('overlay');
-            overlay.style.display = 'none';
             const popup = document.getElementById('daySelectionPopup');
-            popup.style.display = 'none';
-
-            const week = popup.dataset.week;
-            const programType = popup.dataset.programType;
-
+            const maxDays = popup.dataset.maxDays;
             const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
-            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
 
-            // Only collect timing data for the hourly program
-            const timings = selectedDays.map(day => ({
-                day,
-                startTime: programType.includes('Hourly') ? document.getElementById(`startTime${day}`).value : null,
-                endTime: programType.includes('Hourly') ? document.getElementById(`endTime${day}`).value : null
-            }));
+            if (selectedDays.length < maxDays && !popup.dataset.programType.includes('5 Day ½ AM/PM') && !popup.dataset.programType.includes('Hourly')) {
+                document.getElementById('errorMessage').innerText = `Please choose ${maxDays} days.`;
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
 
-            // Store the selected values in a hidden input or some other data structure
-            // Here we could store it in a data attribute or some other form
+            document.getElementById('errorMessage').style.display = 'none';
+
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
 
             // Reset the selections
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-
-            // Validate the selected days
-            const maxDays = popup.dataset.maxDays;
-            if (selectedDays.length < maxDays && !programType.includes('5 Day ½ AM/PM')) {
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = `Please choose ${maxDays} days.`;
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            // Hide the error message if validation passes
-            document.getElementById('errorMessage').style.display = 'none';
-
-            // Close the popup
-            overlay.style.display = 'none';
-            popup.style.display = 'none';
+            document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
         }
 
         function cancelDaySelection() {
@@ -424,9 +352,7 @@
 
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-
-            // Hide the error message
-            document.getElementById('errorMessage').style.display = 'none';
+            document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
         }
 
         function checkGrade() {
