@@ -276,19 +276,13 @@
                 }
             });
 
-            // Remove timing options for non-hourly programs
-            if (!isHourly) {
-                document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
-            }
+            // Show/hide day selection based on the program type
+            document.getElementById('daySelection').classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
 
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
                 input.checked = false;
             });
-
-            if (isHalfDay && !programType.includes('5 Day ½ AM/PM')) {
-                document.getElementById('amPmSelection').classList.remove('hidden');
-            }
 
             if (!isHourly) {
                 const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
@@ -336,7 +330,6 @@
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-            document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
         }
 
         function cancelDaySelection() {
@@ -352,7 +345,6 @@
 
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-            document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
         }
 
         function checkGrade() {
