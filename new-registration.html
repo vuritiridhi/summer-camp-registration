@@ -286,9 +286,9 @@
                     });
                 });
             } else {
+                document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden')); // Add this line to hide timing divs for non-hourly programs
                 const maxDays = programType.includes('4 Day') ? 4 : programType.includes('3 Day') ? 3 : programType.includes('2 Day') ? 2 : programType.includes('1 Day') ? 1 : 5;
                 document.querySelectorAll(`#daySelection input[name="popupDays"]:nth-child(n+${maxDays + 1})`).forEach(input => input.disabled = true);
-                popup.dataset.maxDays = maxDays;
             }
 
             popup.dataset.programType = programType;
@@ -302,7 +302,7 @@
                 checkbox.addEventListener('change', () => {
                     const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
                     checkboxes.forEach(cb => {
-                        cb.disabled = !cb.checked && checkedCount >= popup.dataset.maxDays;
+                        cb.disabled = !cb.checked && checkedCount >= maxDays;
                     });
                 });
             });
