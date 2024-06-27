@@ -136,7 +136,7 @@
         }
         h2 {
             font-size: 1.5em;
-            margin-bottom: 0;
+            margin-bottom: 20px;
         }
     </style>
     <script>
@@ -339,13 +339,15 @@
             // Restore the initial state
             const week = popup.dataset.week;
             const initialChecked = popup.dataset.initialChecked === 'true';
-            const correspondingCheckbox = document.querySelector(`input[name^="weeks"][value^="${week}"]`);
-            correspondingCheckbox.checked = initialChecked;
+            document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked = initialChecked;
 
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
-        }
 
+            // Uncheck the corresponding checkbox in the grid
+            const gridCheckbox = document.querySelector(`input[name^="weeks"][value^="${week}"]`);
+            gridCheckbox.checked = false;
+        }
 
         function checkGrade() {
             const grade = document.getElementById('grade').value;
@@ -662,7 +664,7 @@
     <div id="overlay" class="overlay"></div>
 
     <div id="daySelectionPopup" class="popup">
-        <h2 id="popupTitle" style="margin-bottom: 10px;">Select Days</h2>
+        <h2 id="popupTitle">Select Days</h2>
         <div id="daySelection">
             <label><input type="checkbox" name="popupDays" value="Monday" onchange="toggleTiming(this, 'Monday')"> Monday</label>
             <div id="timingMonday" class="hidden timing">
@@ -670,47 +672,13 @@
                 <select id="startTimeMonday" name="startTimeMonday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeMonday">End Time:</label>
                 <select id="endTimeMonday" name="endTimeMonday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -720,47 +688,13 @@
                 <select id="startTimeTuesday" name="startTimeTuesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeTuesday">End Time:</label>
                 <select id="endTimeTuesday" name="endTimeTuesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -770,47 +704,13 @@
                 <select id="startTimeWednesday" name="startTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeWednesday">End Time:</label>
                 <select id="endTimeWednesday" name="endTimeWednesday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -820,47 +720,13 @@
                 <select id="startTimeThursday" name="startTimeThursday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeThursday">End Time:</label>
                 <select id="endTimeThursday" name="endTimeThursday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
             <br>
@@ -870,56 +736,21 @@
                 <select id="startTimeFriday" name="startTimeFriday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
                 <label for="endTimeFriday">End Time:</label>
                 <select id="endTimeFriday" name="endTimeFriday">
                     <option value="8:30am">8:30am</option>
                     <option value="9:00am">9:00am</option>
-                    <option value="9:30am">9:30am</option>
-                    <option value="10:00am">10:00am</option>
-                    <option value="10:30am">10:30am</option>
-                    <option value="11:00am">11:00am</option>
-                    <option value="11:30am">11:30am</option>
-                    <option value="12:00pm">12:00pm</option>
-                    <option value="12:30pm">12:30pm</option>
-                    <option value="1:00pm">1:00pm</option>
-                    <option value="1:30pm">1:30pm</option>
-                    <option value="2:00pm">2:00pm</option>
-                    <option value="2:30pm">2:30pm</option>
-                    <option value="3:00pm">3:00pm</option>
-                    <option value="3:30pm">3:30pm</option>
-                    <option value="4:00pm">4:00pm</option>
-                    <option value="4:30pm">4:30pm</option>
-                    <option value="5:00pm">5:00pm</option>
-                    <option value="5:30pm">5:30pm</option>
-                    <option value="6:00pm">6:00pm</option>
+                    <!-- Add more options as needed -->
                 </select>
             </div>
         </div>
         <br>
         <div id="amPmSelection" class="hidden">
-            <label><input type="radio" name="popupAmPm" value="AM"> AM Session</label><br>
-            <label><input type="radio" name="popupAmPm" value="PM"> PM Session</label><br>
+            <label><input type="radio" name="popupAmPm" value="AM"> AM</label>
+            <label><input type="radio" name="popupAmPm" value="PM"> PM</label>
         </div>
-        <br>
         <br>
         <button onclick="saveDaySelection()">Save</button>
         <button onclick="cancelDaySelection()">Cancel</button>
