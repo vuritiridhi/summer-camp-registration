@@ -421,12 +421,14 @@
 
             // Restore the initial state
             const week = popup.dataset.week;
-            const initialChecked = popup.dataset.initialChecked === 'true';
             const programType = popup.dataset.programType;
 
             // Uncheck the corresponding checkbox
-            document.querySelectorAll(`input[name^="weeks"][value^="${week}"]`).forEach(cb => cb.checked = false);
-
+            document.querySelectorAll(`input[name^="weeks"][value*="${week}"]`).forEach(cb => {
+                cb.checked = false
+                cb.disabled = false;
+            });
+            
             // Reset the selections in the pop-up
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
