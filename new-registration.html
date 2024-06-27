@@ -279,6 +279,11 @@
         function showDaySelection(programType, week) {
             const overlay = document.getElementById('overlay');
             const popup = document.getElementById('daySelectionPopup');
+            const maxDays = programType.match(/\d Day/) ? parseInt(programType.match(/\d/)[0], 10) : 0;
+            popup.dataset.maxDays = maxDays;
+            popup.dataset.programType = programType;
+            popup.dataset.week = week;
+
             document.getElementById('popupTitle').innerText = programType.includes('Hourly') 
                 ? `Select Timings for ${week} - ${programType}`
                 : `Select Days for ${week} - ${programType}`;
@@ -385,7 +390,7 @@
         function saveDaySelection() {
             const overlay = document.getElementById('overlay');
             const popup = document.getElementById('daySelectionPopup');
-            const maxDays = popup.dataset.maxDays;
+            const maxDays = popup.dataset.maxDays || 0;
             const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
             const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
 
@@ -428,7 +433,7 @@
                 cb.checked = false
                 cb.disabled = false;
             });
-            
+
             // Reset the selections in the pop-up
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
