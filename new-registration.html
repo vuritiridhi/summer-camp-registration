@@ -289,8 +289,12 @@
                 <label><input type="radio" name="popupAmPm" value="AM"> AM (8:30am - 1:00pm)</label><br>
                 <label><input type="radio" name="popupAmPm" value="PM"> PM (1:00pm - 6:00pm)</label><br>`;
 
-                const isHourly = programType.includes('Hourly');
+            const isHourly = programType.includes('Hourly');
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+
+            // Show or hide day selection
+            const daySelection = document.getElementById('daySelection');
+            daySelection.classList.toggle('hidden', programType.includes('5 Day ½ AM/PM'));
 
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
@@ -364,6 +368,16 @@
             overlay.style.display = 'block';
             popup.style.display = 'block';
 
+            const checkboxes = document.querySelectorAll('#daySelection input[name="popupDays"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const checkedCount = document.querySelectorAll('#daySelection input[name="popupDays"]:checked').length;
+                    checkboxes.forEach(cb => {
+                        cb.disabled = !cb.checked && checkedCount >= maxDays;
+                    });
+                });
+            });
+
             // Store the initial state
             popup.dataset.initialChecked = document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked;
         }
@@ -411,7 +425,7 @@
             const programType = popup.dataset.programType;
 
             // Uncheck the corresponding checkbox
-            document.querySelector(`input[name^="weeks"][value^="${week} - ${programType}"]`).checked = false;
+            document.querySelectorAll(`input[name^="weeks"][value^="${week}"]`).forEach(cb => cb.checked = false);
 
             // Reset the selections in the pop-up
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
