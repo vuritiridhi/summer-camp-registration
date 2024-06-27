@@ -305,13 +305,9 @@
                     div.classList.remove('hidden');
                 } else {
                     div.classList.add('hidden');
+                    div.innerHTML = ''; // Remove timing options for non-hourly programs
                 }
             });
-
-            // Remove timing options for non-hourly programs
-            if (!isHourly) {
-                document.querySelectorAll('.timing').forEach(div => div.innerHTML = '');
-            }
 
             document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(input => {
                 input.disabled = false;
@@ -371,6 +367,50 @@
             popup.dataset.initialChecked = document.querySelector(`input[name^="weeks"][value^="${week}"]`).checked;
         }
 
+        function saveDaySelection() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'none';
+            const popup = document.getElementById('daySelectionPopup');
+            popup.style.display = 'none';
+
+            const week = popup.dataset.week;
+            const programType = popup.dataset.programType;
+
+            const selectedDays = Array.from(document.querySelectorAll('#daySelection input[name="popupDays"]:checked')).map(cb => cb.value);
+            const selectedAmPm = Array.from(document.querySelectorAll('#amPmSelection input[name="popupAmPm"]:checked')).map(rb => rb.value);
+
+            // Only collect timing data for the hourly program
+            const timings = selectedDays.map(day => ({
+                day,
+                startTime: programType.includes('Hourly') ? document.getElementById(`startTime${day}`).value : null,
+                endTime: programType.includes('Hourly') ? document.getElementById(`endTime${day}`).value : null
+            }));
+
+            // Store the selected values in a hidden input or some other data structure
+            // Here we could store it in a data attribute or some other form
+
+            // Reset the selections
+            document.querySelectorAll('#daySelection input[name="popupDays"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#amPmSelection input[name="popupAmPm"]').forEach(rb => rb.checked = false);
+            document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
+
+            // Validate the selected days
+            const maxDays = popup.dataset.maxDays;
+            if (selectedDays.length < maxDays && !programType.includes('5 Day ½ AM/PM')) {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = `Please choose ${maxDays} days.`;
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Hide the error message if validation passes
+            document.getElementById('errorMessage').style.display = 'none';
+
+            // Close the popup
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+        }
+
         function cancelDaySelection() {
             const overlay = document.getElementById('overlay');
             const popup = document.getElementById('daySelectionPopup');
@@ -385,7 +425,7 @@
             // Hide all timing divs
             document.querySelectorAll('.timing').forEach(div => div.classList.add('hidden'));
 
-            // Hide error message
+            // Hide the error message
             document.getElementById('errorMessage').style.display = 'none';
         }
 
@@ -732,13 +772,15 @@
             <label><input type="checkbox" name="popupDays" value="Friday" onchange="toggleTiming(this, 'Friday')"> Friday</label>
             <div id="timingFriday" class="hidden timing"></div>
         </div>
+        <br> <!-- Add this line to create space between day selection and AM/PM selection -->
         <div id="amPmSelection" class="hidden">
-            <label><input type="radio" name="popupAmPm" value="AM"> AM</label>
-            <label><input type="radio" name="popupAmPm" value="PM"> PM</label>
+            <label><input type="radio" name="popupAmPm" value="AM"> AM (8:30am - 1:00pm)</label>
+            <br>
+            <label><input type="radio" name="popupAmPm" value="PM"> PM (1:00pm - 6:00pm)</label>
         </div>
         <br>
         <button type="button" onclick="saveDaySelection()">Save</button>
         <button type="button" onclick="cancelDaySelection()">Cancel</button>
-    </div>      
+    </div>          
 </body>
 </html>
